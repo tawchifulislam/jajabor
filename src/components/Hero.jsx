@@ -10,7 +10,7 @@ export default function Hero({ quote, attribution }) {
     <section className="relative overflow-hidden border-b border-line">
       <div className="route-dots absolute inset-0" />
 
-      <div className="relative mx-auto max-w-3xl px-6 py-20 text-center">
+      <div className="relative mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1, rotate: 360 }}

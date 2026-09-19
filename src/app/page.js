@@ -29,8 +29,7 @@ export default async function HomePage() {
           'সারা বিশ্ব হয়ে যায় আমার নিজের ঘর\nখোলা আকাশের নিচে সবাই যাযাবর'
         }
       />
-      <StatsBar places={places} />
-      <main className="mx-auto max-w-7xl flex-1 px-5 pb-16">
+      <main className="mx-auto max-w-7xl flex-1 px-5 py-10">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-l-4 border-brand py-1 pl-4">
           <div>
             <p className="mb-1 text-xs font-medium uppercase tracking-widest text-brand">
@@ -41,13 +40,9 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          {places.length > 0 ? (
-            <p className="text-sm text-ink-soft">
-              <strong className="text-ink">{places.length}</strong> place
-              {places.length === 1 ? '' : 's'} saved
-            </p>
-          ) : null}
+          <StatsBar places={places} />
         </div>
+
         <PlaceGrid places={places} />
       </main>
       <Footer />

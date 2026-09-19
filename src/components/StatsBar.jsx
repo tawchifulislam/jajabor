@@ -8,15 +8,15 @@ export default function StatsBar({ places }) {
   if (totalPlaces === 0) return null;
 
   return (
-    <div className="mx-auto -mt-8 mb-10 flex max-w-fit gap-6 rounded-full border border-line bg-card px-8 py-4 shadow-sm">
-      <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4 rounded-full border border-line bg-card px-5 py-2.5">
+      <div className="flex items-center gap-1.5">
         <Compass className="h-4 w-4 text-brand" />
         <span className="text-sm text-ink-soft">
           <strong className="text-ink">{totalPlaces}</strong> places
         </span>
       </div>
-      <div className="h-5 w-px bg-line" />
-      <div className="flex items-center gap-2">
+      <div className="h-4 w-px bg-line" />
+      <div className="flex items-center gap-1.5">
         <MapPin className="h-4 w-4 text-brand" />
         <span className="text-sm text-ink-soft">
           <strong className="text-ink">{districts}</strong> districts
