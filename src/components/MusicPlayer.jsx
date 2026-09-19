@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, SkipBack, SkipForward } from 'lucide-react';
 
 const PLAYLIST = [
   '/audio/track-1.mp3',
@@ -17,30 +17,43 @@ export default function MusicPlayer() {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    audio.muted = muted;
     audio.play().catch(() => {});
-  }, [trackIndex]);
+  }, [trackIndex, muted]);
 
   function handleEnded() {
     setTrackIndex(prev => (prev + 1) % PLAYLIST.length);
   }
 
+  function goNext() {
+    setTrackIndex(prev => (prev + 1) % PLAYLIST.length);
+  }
+
+  function goPrev() {
+    setTrackIndex(prev => (prev - 1 + PLAYLIST.length) % PLAYLIST.length);
+  }
+
   function toggleMute() {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.muted = !audio.muted;
-    setMuted(audio.muted);
+    setMuted(prev => !prev);
   }
 
   return (
-    <>
+    <div className="flex items-center gap-1">
       <audio
         ref={audioRef}
         src={PLAYLIST[trackIndex]}
-        muted={muted}
-        autoPlay
         preload="auto"
         onEnded={handleEnded}
       />
+
+      <button
+        onClick={goPrev}
+        aria-label="Previous track"
+        className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-soft transition hover:bg-card"
+      >
+        <SkipBack className="h-3.5 w-3.5" />
+      </button>
+
       <button
         onClick={toggleMute}
         aria-label={muted ? 'Unmute music' : 'Mute music'}
@@ -52,6 +65,14 @@ export default function MusicPlayer() {
           <Volume2 className="h-4 w-4 text-brand" />
         )}
       </button>
-    </>
+
+      <button
+        onClick={goNext}
+        aria-label="Next track"
+        className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-soft transition hover:bg-card"
+      >
+        <SkipForward className="h-3.5 w-3.5" />
+      </button>
+    </div>
   );
 }

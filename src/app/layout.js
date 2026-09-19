@@ -32,7 +32,9 @@ export default function RootLayout({ children }) {
       lang="bn"
       className={`${inter.variable} ${playfair.variable} ${tiroBangla.variable}`}
     >
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="min-h-dvh antialiased" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
