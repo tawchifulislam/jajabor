@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import StatsBar from '@/components/StatsBar';
-import PlaceGrid from '@/components/PlaceGrid';
+import PlaceExplorer from '@/components/PlaceExplorer';
 import Footer from '@/components/Footer';
 import { getDb } from '@/lib/mongodb';
 
@@ -30,20 +29,7 @@ export default async function HomePage() {
         }
       />
       <main className="mx-auto max-w-7xl flex-1 px-5 py-10">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-l-4 border-brand py-1 pl-4">
-          <div>
-            <p className="mb-1 text-xs font-medium uppercase tracking-widest text-brand">
-              Your list
-            </p>
-            <h2 className="font-display text-2xl text-ink">
-              Places I want to go
-            </h2>
-          </div>
-
-          <StatsBar places={places} />
-        </div>
-
-        <PlaceGrid places={places} />
+        <PlaceExplorer places={places} />
       </main>
       <Footer />
     </div>
