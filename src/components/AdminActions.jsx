@@ -25,7 +25,7 @@ export default function AdminActions({ placeId, slug }) {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       <Link
         href={`/places/${slug}/edit`}
         className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm text-ink transition hover:bg-card"

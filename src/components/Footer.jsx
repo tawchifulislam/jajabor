@@ -6,7 +6,7 @@ import MusicPlayer from './MusicPlayer';
 export default function Footer() {
   return (
     <footer className="border-t border-line">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-8 text-sm text-ink-soft">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 text-sm text-ink-soft sm:flex-row sm:py-8">
         <Link
           href="/"
           className="flex items-center gap-1.5 transition hover:text-ink"

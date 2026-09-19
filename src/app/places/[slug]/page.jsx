@@ -35,9 +35,11 @@ export default async function PlaceDetailPage({ params }) {
           />
         </div>
 
-        <div className="mb-6 flex items-start justify-between gap-4">
+        <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div>
-            <h1 className="font-display text-3xl text-ink">{place.title}</h1>
+            <h1 className="font-display text-2xl text-ink sm:text-3xl">
+              {place.title}
+            </h1>
             <p className="mt-1 flex items-center gap-1.5 text-ink-soft">
               <MapPin className="h-4 w-4" />
               {place.location}
