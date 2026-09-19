@@ -1,4 +1,4 @@
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Tiro_Bangla } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
@@ -13,15 +13,25 @@ const playfair = Playfair_Display({
   display: 'swap',
 });
 
+const tiroBangla = Tiro_Bangla({
+  subsets: ['bengali'],
+  weight: '400',
+  variable: '--font-tiro-bangla',
+  display: 'swap',
+});
+
 export const metadata = {
   title: 'Jajabor',
   description:
-    'A personal log of places to visit - photos, routes, and travel notes.',
+    'A personal log of places to visit — photos, routes, and travel notes.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="bn" className={`${inter.variable} ${playfair.variable}`}>
+    <html
+      lang="bn"
+      className={`${inter.variable} ${playfair.variable} ${tiroBangla.variable}`}
+    >
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

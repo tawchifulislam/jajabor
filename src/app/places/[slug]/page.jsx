@@ -62,7 +62,7 @@ export default async function PlaceDetailPage({ params }) {
 
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {place.bestTime ? (
-            <div className="rounded-card border border-line bg-card p-4">
+            <div className="mb-6 rounded-card border border-line bg-card p-4">
               <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-ink-soft">
                 <CalendarDays className="h-3.5 w-3.5" />
                 Best time
@@ -71,13 +71,15 @@ export default async function PlaceDetailPage({ params }) {
             </div>
           ) : null}
           {place.estimatedCost ? (
-            <div className="rounded-card border border-line bg-card p-4">
-              <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-ink-soft">
-                <Wallet className="h-3.5 w-3.5" />
-                Estimated cost
+            <section className="mb-6 rounded-card border border-line bg-card p-5">
+              <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
+                <Wallet className="h-4 w-4 text-brand" />
+                Route &amp; fare
+              </h2>
+              <p className="whitespace-pre-line text-ink-soft">
+                {place.estimatedCost}
               </p>
-              <p className="mt-1 text-ink">{place.estimatedCost}</p>
-            </div>
+            </section>
           ) : null}
         </div>
 

@@ -11,8 +11,8 @@ export default function PlaceCard({ place }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      whileHover={{ y: -4 }}
-      className="group overflow-hidden rounded-card border border-line bg-card shadow-sm"
+      whileHover={{ y: -6 }}
+      className="group overflow-hidden rounded-card border border-line bg-card shadow-sm transition-shadow duration-300 hover:shadow-lg hover:shadow-ink/5"
     >
       <Link href={`/places/${place.slug}`}>
         <div className="relative h-48 w-full overflow-hidden">
@@ -23,6 +23,7 @@ export default function PlaceCard({ place }) {
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover transition duration-500 group-hover:scale-105"
           />
+          <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
 
         <div className="p-4">

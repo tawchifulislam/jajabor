@@ -130,14 +130,18 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
             className="w-full rounded-lg border border-line bg-card px-3 py-2 text-ink outline-none focus:border-brand"
           />
         </div>
+
         <div>
           <label className="mb-1 block text-sm font-medium text-ink">
-            Estimated cost
+            Route details &amp; fare
           </label>
-          <input
+          <textarea
             value={form.estimatedCost}
             onChange={e => update('estimatedCost', e.target.value)}
-            placeholder="৳3000 per person"
+            rows={4}
+            placeholder={
+              'CNG from bus stand: ৳150\nJeep rental (full day): ৳3500\nBoat crossing: ৳50 per person'
+            }
             className="w-full rounded-lg border border-line bg-card px-3 py-2 text-ink outline-none focus:border-brand"
           />
         </div>
