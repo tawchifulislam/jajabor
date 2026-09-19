@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { Code2 } from "lucide-react";
-import JajaborMark from "./JajaborMark";
-import MusicPlayer from "./MusicPlayer";
+import Link from 'next/link';
+import { Code2 } from 'lucide-react';
+import JajaborMark from './JajaborMark';
+import MusicPlayer from './MusicPlayer';
 
 export default function Footer() {
   return (
@@ -12,13 +12,13 @@ export default function Footer() {
           className="flex items-center gap-1.5 transition hover:text-ink"
         >
           <JajaborMark className="h-5 w-6" />
-          Jajabor
+          <span className="font-display text-ink">Jajabor</span>
         </Link>
 
         <MusicPlayer />
 
-        
-        <a  href="https://github.com/tawchifulislam"
+        <a
+          href="https://github.com/tawchifulislam"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 transition hover:text-ink"

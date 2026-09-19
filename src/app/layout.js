@@ -23,7 +23,7 @@ const tiroBangla = Tiro_Bangla({
 export const metadata = {
   title: 'Jajabor',
   description:
-    'A personal log of places to visit — photos, routes, and travel notes.',
+    'A personal log of places to visit - photos, routes, and travel notes.',
 };
 
 export default function RootLayout({ children }) {
