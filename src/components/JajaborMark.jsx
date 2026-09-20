@@ -1,16 +1,11 @@
 export default function JajaborMark({ className = 'h-6 w-6' }) {
   return (
-    <svg viewBox="0 0 60 50" fill="none" className={className}>
-      <circle cx="4" cy="42" r="1.5" fill="#0f766e" opacity="0.3" />
-      <circle cx="9" cy="37" r="2" fill="#0f766e" opacity="0.55" />
-      <circle cx="14" cy="31" r="2.5" fill="#d97706" />
+    <svg viewBox="0 0 70 34" fill="none" className={className}>
       <path
-        d="M18 27 Q 32 5 46 20 Q 52 12 58 15"
-        stroke="#0f766e"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M5,5 Q20,22 35,30 Q50,22 65,8 Q58,2 50,10 Q42,16 35,14 Q28,16 20,10 Q12,2 5,5 Z"
+        fill="#0f766e"
       />
+      <circle cx="65" cy="8" r="3" fill="#d97706" />
     </svg>
   );
 }
