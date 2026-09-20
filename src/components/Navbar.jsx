@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Plus, LogIn, LogOut } from 'lucide-react';
-import { useSession, signIn, signOut } from '@/lib/auth-client';
-import JajaborMark from './JajaborMark';
-import Container from './layout/Container';
+import Link from "next/link";
+import { Plus, LogIn, LogOut } from "lucide-react";
+import { useSession, signIn, signOut } from "@/lib/auth-client";
+import JajaborMark from "./JajaborMark";
+import Container from "./layout/Container";
 
 export default function Navbar() {
   const { data: session, isPending } = useSession();
@@ -24,11 +24,10 @@ export default function Navbar() {
             <>
               <Link
                 href="/add"
-                aria-label="Add place"
-                className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3 py-2 text-sm font-medium text-white transition hover:bg-brand-dark sm:px-4"
+                className="hidden items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-dark sm:inline-flex"
               >
                 <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">Add place</span>
+                Add place
               </Link>
               <button
                 onClick={() => signOut()}
@@ -40,13 +39,11 @@ export default function Navbar() {
             </>
           ) : (
             <button
-              onClick={() =>
-                signIn.social({ provider: 'google', callbackURL: '/' })
-              }
-              className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-2 text-sm font-medium text-ink transition hover:bg-card sm:px-4"
+              onClick={() => signIn.social({ provider: "google", callbackURL: "/" })}
+              className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm font-medium text-ink transition hover:bg-card"
             >
               <LogIn className="h-4 w-4" />
-              <span className="hidden sm:inline">Sign in</span>
+              Sign in
             </button>
           )}
         </div>

@@ -7,9 +7,10 @@
   --color-card: #ffffff;
   --color-line: #e6e2da;
   --color-brand: #0f766e;
+  --color-brand-dark: #0b5b54;
   --color-brand-soft: #ccfbf1;
   --color-accent: #d97706;
-  --color-brand-dark: #0b5b54;
+  --color-stamp: #9a3324;
   --color-surface-alt: #f3f0ea;
   --color-line-strong: #d3cdc0;
   --color-ink-faint: #94a0aa;
@@ -50,6 +51,7 @@ body {
   background: var(--color-line);
   border-radius: 999px;
 }
+
 .route-dots {
   background-image: radial-gradient(var(--color-line) 1.4px, transparent 1.4px);
   background-size: 22px 22px;
@@ -69,6 +71,7 @@ body {
   font-family: var(--font-display);
   line-height: 0.6;
 }
+
 @keyframes draw-route {
   from {
     stroke-dashoffset: 240;

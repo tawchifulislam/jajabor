@@ -43,7 +43,12 @@ export default function AddPlacePage() {
     <div className="flex min-h-dvh flex-col">
       <Navbar />
       <Container as="main" size="form" className="flex-1 py-10">
-        <h1 className="mb-6 font-display text-2xl text-ink">Add a place</h1>
+        <h1 className="mb-2 font-display text-2xl text-ink">Add a place</h1>
+        <p className="mb-6 text-sm text-ink-soft">
+          This is where you log a new place on your list - give it a title and
+          location, a cover photo, and jot down how to get there. The more
+          detail you leave yourself now, the more useful it&apos;ll be later.
+        </p>
         <PlaceForm />
       </Container>
       <Footer />

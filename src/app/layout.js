@@ -1,5 +1,6 @@
 import { Inter, Playfair_Display, Tiro_Bangla } from 'next/font/google';
 import './globals.css';
+import AddFab from '@/components/AddFab';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
         {children}
+        <AddFab />
       </body>
     </html>
   );

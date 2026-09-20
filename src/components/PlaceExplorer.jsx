@@ -1,13 +1,16 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import SearchBar from './SearchBar';
 import PlaceGrid from './PlaceGrid';
 import StatsBar from './StatsBar';
 import SectionHeader from './layout/SectionHeader';
 import { SearchX } from 'lucide-react';
+import { useSession, signIn } from '@/lib/auth-client';
 
 export default function PlaceExplorer({ places }) {
+  const { data: session } = useSession();
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
@@ -26,11 +29,38 @@ export default function PlaceExplorer({ places }) {
   return (
     <>
       <SectionHeader
-        eyebrow="Your list"
         title="Places I want to go"
         action={<StatsBar places={places} />}
-        className="mb-8"
+        className="mb-3"
       />
+
+      <p className="mb-8 text-sm text-ink-soft">
+        {session?.user ? (
+          <>
+            Know a place worth visiting?{' '}
+            <Link
+              href="/add"
+              className="text-brand underline underline-offset-2"
+            >
+              Add it to the list
+            </Link>
+            .
+          </>
+        ) : (
+          <>
+            Know a place worth visiting?{' '}
+            <button
+              onClick={() =>
+                signIn.social({ provider: 'google', callbackURL: '/add' })
+              }
+              className="text-brand underline underline-offset-2"
+            >
+              Sign in with Google
+            </button>{' '}
+            to add it.
+          </>
+        )}
+      </p>
 
       {places.length > 0 ? (
         <div className="mb-6">
