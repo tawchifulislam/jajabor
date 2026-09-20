@@ -2,6 +2,7 @@ import { Inter, Playfair_Display, Tiro_Bangla } from 'next/font/google';
 import './globals.css';
 import AddFab from '@/components/AddFab';
 import ToastProvider from '@/components/ToastProvider';
+import { MotionConfig } from 'framer-motion';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -55,8 +56,10 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
         <ToastProvider>
-          {children}
-          <AddFab />
+          <MotionConfig reducedMotion="user">
+            {children}
+            <AddFab />
+          </MotionConfig>
         </ToastProvider>
       </body>
     </html>
