@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Compass } from 'lucide-react';
+import Container from './layout/Container';
 
 export default function Hero({ quote, attribution }) {
   const lines = quote.split('\n');
@@ -10,7 +11,7 @@ export default function Hero({ quote, attribution }) {
     <section className="relative overflow-hidden border-b border-line">
       <div className="route-dots absolute inset-0" />
 
-      <div className="relative mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
+      <Container size="narrow" className="relative py-16 text-center sm:py-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1, rotate: 360 }}
@@ -28,7 +29,7 @@ export default function Hero({ quote, attribution }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="quote-mark select-none text-6xl text-brand/25"
+          className="quote-mark select-none text-5xl text-brand/25 sm:text-6xl"
         >
           “
         </motion.p>
@@ -37,7 +38,7 @@ export default function Hero({ quote, attribution }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="-mt-4 font-quote text-3xl leading-relaxed text-ink sm:text-4xl"
+          className="-mt-3 font-quote text-xl leading-snug text-ink sm:-mt-4 sm:text-2xl sm:leading-relaxed md:text-3xl lg:text-4xl"
         >
           {lines.map((line, idx) => (
             <span key={idx} className="block">
@@ -77,7 +78,7 @@ export default function Hero({ quote, attribution }) {
             - {attribution}
           </motion.p>
         ) : null}
-      </div>
+      </Container>
     </section>
   );
 }

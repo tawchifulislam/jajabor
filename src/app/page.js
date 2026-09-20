@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import PlaceExplorer from '@/components/PlaceExplorer';
 import Footer from '@/components/Footer';
+import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
@@ -28,9 +29,9 @@ export default async function HomePage() {
           'সারা বিশ্ব হয়ে যায় আমার নিজের ঘর\nখোলা আকাশের নিচে সবাই যাযাবর'
         }
       />
-      <main className="mx-auto max-w-7xl flex-1 px-5 py-10">
+      <Container as="main" className="flex-1 py-10">
         <PlaceExplorer places={places} />
-      </main>
+      </Container>
       <Footer />
     </div>
   );

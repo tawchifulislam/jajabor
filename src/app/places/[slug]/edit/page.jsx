@@ -1,7 +1,9 @@
 import { notFound, redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import PlaceForm from '@/components/PlaceForm';
+import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
@@ -22,12 +24,13 @@ export default async function EditPlacePage({ params }) {
   if (!place) notFound();
 
   return (
-    <>
+    <div className="flex min-h-dvh flex-col">
       <Navbar />
-      <main className="mx-auto max-w-2xl px-5 py-10">
+      <Container as="main" size="form" className="flex-1 py-10">
         <h1 className="mb-6 font-display text-2xl text-ink">Edit place</h1>
         <PlaceForm initialData={place} placeId={place._id} />
-      </main>
-    </>
+      </Container>
+      <Footer />
+    </div>
   );
 }

@@ -2,7 +2,9 @@
 
 import { useSession, signIn } from '@/lib/auth-client';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import PlaceForm from '@/components/PlaceForm';
+import Container from '@/components/layout/Container';
 
 export default function AddPlacePage() {
   const { data: session, isPending } = useSession();
@@ -11,33 +13,40 @@ export default function AddPlacePage() {
 
   if (!session?.user) {
     return (
-      <>
+      <div className="flex min-h-dvh flex-col">
         <Navbar />
-        <main className="mx-auto flex max-w-md flex-col items-center gap-4 px-5 py-24 text-center">
-          <h1 className="font-display text-2xl text-ink">Sign in required</h1>
-          <p className="text-ink-soft">
-            You need a Google account to add a place.
-          </p>
-          <button
-            onClick={() =>
-              signIn.social({ provider: 'google', callbackURL: '/add' })
-            }
-            className="rounded-full bg-brand px-6 py-2.5 font-medium text-white"
-          >
-            Sign in with Google
-          </button>
-        </main>
-      </>
+        <Container
+          as="main"
+          className="flex flex-1 items-center justify-center py-24"
+        >
+          <div className="mx-auto flex max-w-md flex-col items-center gap-4 text-center">
+            <h1 className="font-display text-2xl text-ink">Sign in required</h1>
+            <p className="text-ink-soft">
+              You need a Google account to add a place.
+            </p>
+            <button
+              onClick={() =>
+                signIn.social({ provider: 'google', callbackURL: '/add' })
+              }
+              className="rounded-full bg-brand px-6 py-2.5 font-medium text-white transition hover:bg-brand-dark"
+            >
+              Sign in with Google
+            </button>
+          </div>
+        </Container>
+        <Footer />
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="flex min-h-dvh flex-col">
       <Navbar />
-      <main className="mx-auto max-w-2xl px-5 py-10">
+      <Container as="main" size="form" className="flex-1 py-10">
         <h1 className="mb-6 font-display text-2xl text-ink">Add a place</h1>
         <PlaceForm />
-      </main>
-    </>
+      </Container>
+      <Footer />
+    </div>
   );
 }

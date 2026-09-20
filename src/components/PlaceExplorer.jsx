@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import SearchBar from './SearchBar';
 import PlaceGrid from './PlaceGrid';
 import StatsBar from './StatsBar';
+import SectionHeader from './layout/SectionHeader';
 import { SearchX } from 'lucide-react';
 
 export default function PlaceExplorer({ places }) {
@@ -24,18 +25,12 @@ export default function PlaceExplorer({ places }) {
 
   return (
     <>
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-l-4 border-brand py-1 pl-4">
-        <div>
-          <p className="mb-1 text-xs font-medium uppercase tracking-widest text-brand">
-            Your list
-          </p>
-          <h2 className="font-display text-2xl text-ink">
-            Places I want to go
-          </h2>
-        </div>
-
-        <StatsBar places={places} />
-      </div>
+      <SectionHeader
+        eyebrow="Your list"
+        title="Places I want to go"
+        action={<StatsBar places={places} />}
+        className="mb-8"
+      />
 
       {places.length > 0 ? (
         <div className="mb-6">

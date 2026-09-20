@@ -1,8 +1,16 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { MapPin, CalendarDays, Wallet, Navigation } from 'lucide-react';
+import {
+  MapPin,
+  CalendarDays,
+  Wallet,
+  Navigation,
+  RouteIcon,
+} from 'lucide-react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import AdminActions from '@/components/AdminActions';
+import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
@@ -23,10 +31,10 @@ export default async function PlaceDetailPage({ params }) {
   const admin = isAdmin(session);
 
   return (
-    <>
+    <div className="flex min-h-dvh flex-col">
       <Navbar />
-      <main className="mx-auto max-w-3xl px-5 py-10">
-        <div className="relative mb-6 h-72 w-full overflow-hidden rounded-card">
+      <Container as="main" size="narrow" className="flex-1 py-10">
+        <div className="relative mb-6 h-64 w-full overflow-hidden rounded-card sm:h-72">
           <Image
             src={place.coverImage}
             alt={place.title}
@@ -62,28 +70,27 @@ export default async function PlaceDetailPage({ params }) {
           </section>
         ) : null}
 
-        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {place.bestTime ? (
-            <div className="mb-6 rounded-card border border-line bg-card p-4">
-              <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-ink-soft">
-                <CalendarDays className="h-3.5 w-3.5" />
-                Best time
-              </p>
-              <p className="mt-1 text-ink">{place.bestTime}</p>
-            </div>
-          ) : null}
-          {place.estimatedCost ? (
-            <section className="mb-6 rounded-card border border-line bg-card p-5">
-              <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
-                <Wallet className="h-4 w-4 text-brand" />
-                Route &amp; fare
-              </h2>
-              <p className="whitespace-pre-line text-ink-soft">
-                {place.estimatedCost}
-              </p>
-            </section>
-          ) : null}
-        </div>
+        {place.bestTime ? (
+          <div className="mb-6 rounded-card border border-line bg-card p-4">
+            <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-ink-soft">
+              <CalendarDays className="h-3.5 w-3.5" />
+              Best time
+            </p>
+            <p className="mt-1 text-ink">{place.bestTime}</p>
+          </div>
+        ) : null}
+
+        {place.estimatedCost ? (
+          <section className="mb-6 rounded-card border border-line bg-card p-5">
+            <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
+              <RouteIcon className="h-4 w-4 text-brand" />
+              Route details
+            </h2>
+            <p className="whitespace-pre-line text-ink-soft">
+              {place.estimatedCost}
+            </p>
+          </section>
+        ) : null}
 
         {place.notes ? (
           <section className="mb-6">
@@ -107,7 +114,8 @@ export default async function PlaceDetailPage({ params }) {
             </div>
           </section>
         ) : null}
-      </main>
-    </>
+      </Container>
+      <Footer />
+    </div>
   );
 }
