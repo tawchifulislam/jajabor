@@ -3,33 +3,37 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Route } from 'lucide-react';
+import { MapPin, Route } from 'lucide-react';
+import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 
 function isBengali(text) {
   return /[\u0980-\u09FF]/.test(text);
 }
 
 export default function PlaceCard({ place, index = 0 }) {
-  const baseRotate = index % 2 === 0 ? -1.2 : 1.1;
   const district = place.location.split(',')[0].trim();
   const bengaliTitle = isBengali(place.title);
+  const bengaliDistrict = isBengali(district);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{
+        duration: 0.4,
+        ease: 'easeOut',
+        delay: Math.min(index, 6) * 0.05,
+      }}
     >
       <Link href={`/places/${place.slug}`} className="block">
         <motion.div
-          initial={{ rotate: baseRotate }}
-          whileHover={{ rotate: 0, y: -6 }}
-          transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-          className="relative bg-[#fffefb] p-2 pb-6 shadow-[0_1px_3px_rgba(15,23,32,0.08)]"
+          whileHover={{ y: -5 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+          className="relative rounded-lg bg-[#fffefb] p-2 shadow-[0_1px_3px_rgba(15,23,32,0.08)]"
         >
-          <div className="relative h-44 w-full overflow-hidden">
+          <div className="relative h-44 w-full overflow-hidden rounded-md">
             <Image
-              src={place.coverImage}
+              src={cloudinaryUrl(place.coverImage, 600)}
               alt={place.title}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
@@ -37,10 +41,15 @@ export default function PlaceCard({ place, index = 0 }) {
             />
           </div>
 
-          <div className="absolute -top-2 left-5 h-4 w-12 rotate-[-5deg] bg-accent/25" />
-
-          <div className="absolute -right-2 -bottom-2 flex h-16 w-16 -rotate-12 items-center justify-center rounded-full border border-dashed border-stamp bg-surface">
-            <span className="font-quote px-1 text-center text-[11px] leading-tight text-stamp">
+          <div className="absolute bottom-4 left-4 flex items-center gap-1 rounded-full bg-card/95 px-2.5 py-1 shadow-sm">
+            <MapPin className="h-3 w-3 text-brand" />
+            <span
+              className={
+                bengaliDistrict
+                  ? 'font-quote text-xs text-ink'
+                  : 'text-xs font-medium text-ink'
+              }
+            >
               {district}
             </span>
           </div>

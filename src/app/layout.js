@@ -1,6 +1,7 @@
 import { Inter, Playfair_Display, Tiro_Bangla } from 'next/font/google';
 import './globals.css';
 import AddFab from '@/components/AddFab';
+import ToastProvider from '@/components/ToastProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,8 +35,10 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${playfair.variable} ${tiroBangla.variable}`}
     >
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
-        {children}
-        <AddFab />
+        <ToastProvider>
+          {children}
+          <AddFab />
+        </ToastProvider>
       </body>
     </html>
   );

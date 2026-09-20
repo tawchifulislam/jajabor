@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Compass } from 'lucide-react';
+import JajaborMark from './JajaborMark';
 import Container from './layout/Container';
 
 export default function Hero({ quote, attribution }) {
@@ -14,15 +14,15 @@ export default function Hero({ quote, attribution }) {
       <Container size="narrow" className="relative py-16 text-center sm:py-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1, rotate: 360 }}
+          animate={{ opacity: 1, scale: 1, y: [0, -4, 0] }}
           transition={{
             opacity: { duration: 0.5 },
             scale: { duration: 0.5 },
-            rotate: { duration: 14, repeat: Infinity, ease: 'linear' },
+            y: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
           }}
-          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-soft"
+          className="mb-4 inline-flex h-12 w-14 items-center justify-center rounded-full bg-brand-soft"
         >
-          <Compass className="h-6 w-6 text-brand" strokeWidth={2} />
+          <JajaborMark className="h-6 w-8" />
         </motion.div>
 
         <motion.p

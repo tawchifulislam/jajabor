@@ -9,16 +9,41 @@ import {
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AdminActions from '@/components/AdminActions';
+import GalleryLightbox from '@/components/GalleryLightbox';
 import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
+import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { headers } from 'next/headers';
 
 async function getPlace(slug) {
   const db = await getDb();
   const place = await db.collection('places').findOne({ slug });
   return place ? JSON.parse(JSON.stringify(place)) : null;
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const place = await getPlace(slug);
+
+  if (!place) {
+    return { title: 'Place not found - Jajabor' };
+  }
+
+  const description =
+    place.howToGetThere?.slice(0, 155) ||
+    `A place to visit in ${place.location}.`;
+
+  return {
+    title: `${place.title} - Jajabor`,
+    description,
+    openGraph: {
+      title: place.title,
+      description,
+      images: [{ url: cloudinaryUrl(place.coverImage, 1200) }],
+    },
+  };
 }
 
 export default async function PlaceDetailPage({ params }) {
@@ -35,10 +60,12 @@ export default async function PlaceDetailPage({ params }) {
       <Container as="main" size="narrow" className="flex-1 py-10">
         <div className="relative mb-6 h-64 w-full overflow-hidden rounded-card sm:h-72">
           <Image
-            src={place.coverImage}
+            src={cloudinaryUrl(place.coverImage, 1200)}
             alt={place.title}
             fill
+            sizes="(max-width: 768px) 100vw, 768px"
             className="object-cover"
+            priority
           />
         </div>
 
@@ -101,22 +128,7 @@ export default async function PlaceDetailPage({ params }) {
         {place.gallery?.length ? (
           <section>
             <h2 className="mb-3 font-display text-lg text-ink">Gallery</h2>
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-              {place.gallery.map((url, idx) => (
-                <div
-                  key={idx}
-                  className="group relative aspect-square overflow-hidden rounded-lg border border-line/70"
-                >
-                  <Image
-                    src={url}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 33vw, 200px"
-                    className="object-cover transition duration-300 group-hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
+            <GalleryLightbox images={place.gallery} alt={place.title} />
           </section>
         ) : null}
       </Container>

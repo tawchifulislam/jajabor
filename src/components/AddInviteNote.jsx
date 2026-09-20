@@ -8,7 +8,7 @@ export default function AddInviteNote() {
   const { data: session } = useSession();
 
   return (
-    <div className="mb-8 inline-flex -rotate-1 items-center gap-2 rounded-lg border border-dashed border-accent/50 bg-accent/10 px-4 py-2.5 text-sm text-ink">
+    <div className="mb-8 inline-flex items-center gap-2 rounded-lg border border-dashed border-accent/50 bg-accent/10 px-4 py-2.5 text-sm text-ink">
       <PenLine className="h-4 w-4 shrink-0 text-accent" />
       {session?.user ? (
         <span>
