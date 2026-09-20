@@ -3,9 +3,8 @@ import { notFound } from 'next/navigation';
 import {
   MapPin,
   CalendarDays,
-  Wallet,
+  Route as RouteIcon,
   Navigation,
-  RouteIcon,
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -102,13 +101,19 @@ export default async function PlaceDetailPage({ params }) {
         {place.gallery?.length ? (
           <section>
             <h2 className="mb-3 font-display text-lg text-ink">Gallery</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
               {place.gallery.map((url, idx) => (
                 <div
                   key={idx}
-                  className="relative h-32 overflow-hidden rounded-lg"
+                  className="group relative aspect-square overflow-hidden rounded-lg border border-line/70"
                 >
-                  <Image src={url} alt="" fill className="object-cover" />
+                  <Image
+                    src={url}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 33vw, 200px"
+                    className="object-cover transition duration-300 group-hover:scale-105"
+                  />
                 </div>
               ))}
             </div>

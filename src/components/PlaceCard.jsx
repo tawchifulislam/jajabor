@@ -3,14 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin, Route } from 'lucide-react';
+import { Route } from 'lucide-react';
 
 function isBengali(text) {
   return /[\u0980-\u09FF]/.test(text);
 }
 
 export default function PlaceCard({ place, index = 0 }) {
-  const rotateClass = index % 2 === 0 ? '-rotate-[1.4deg]' : 'rotate-[1.3deg]';
+  const baseRotate = index % 2 === 0 ? -1.2 : 1.1;
   const district = place.location.split(',')[0].trim();
   const bengaliTitle = isBengali(place.title);
 
@@ -18,12 +18,14 @@ export default function PlaceCard({ place, index = 0 }) {
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       <Link href={`/places/${place.slug}`} className="block">
-        <div
-          className={`relative bg-[#fffefb] p-2.5 pb-7 shadow-[0_1px_3px_rgba(15,23,32,0.1)] ${rotateClass}`}
+        <motion.div
+          initial={{ rotate: baseRotate }}
+          whileHover={{ rotate: 0, y: -6 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+          className="relative bg-[#fffefb] p-2 pb-6 shadow-[0_1px_3px_rgba(15,23,32,0.08)]"
         >
           <div className="relative h-44 w-full overflow-hidden">
             <Image
@@ -35,14 +37,14 @@ export default function PlaceCard({ place, index = 0 }) {
             />
           </div>
 
-          <div className="absolute -top-2 left-5 h-5 w-14 -rotate-6 bg-accent/30" />
+          <div className="absolute -top-2 left-5 h-4 w-12 rotate-[-5deg] bg-accent/25" />
 
-          <div className="absolute -right-3 -bottom-1 flex h-18 w-18 -rotate-12 items-center justify-center rounded-full border-[1.5px] border-dashed border-stamp bg-surface">
-            <span className="px-1 text-center text-[9.5px] leading-tight tracking-wide text-stamp">
+          <div className="absolute -right-2 -bottom-2 flex h-16 w-16 -rotate-12 items-center justify-center rounded-full border border-dashed border-stamp bg-surface">
+            <span className="font-quote px-1 text-center text-[11px] leading-tight text-stamp">
               {district}
             </span>
           </div>
-        </div>
+        </motion.div>
 
         <p
           className={
@@ -58,18 +60,6 @@ export default function PlaceCard({ place, index = 0 }) {
           <p className="mt-1 flex items-start gap-1.5 text-xs text-ink-soft line-clamp-2">
             <Route className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             {place.howToGetThere}
-          </p>
-        ) : (
-          <p className="mt-1 flex items-center gap-1.5 text-xs text-ink-soft">
-            <MapPin className="h-3.5 w-3.5" />
-            {place.location}
-          </p>
-        )}
-
-        {place.gallery?.length ? (
-          <p className="mt-2 border-t border-dashed border-line pt-1.5 text-[11px] text-ink-soft">
-            +{place.gallery.length} more photo
-            {place.gallery.length === 1 ? '' : 's'}
           </p>
         ) : null}
       </Link>
