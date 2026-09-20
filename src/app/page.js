@@ -1,26 +1,14 @@
+import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import PlaceExplorer from '@/components/PlaceExplorer';
 import Footer from '@/components/Footer';
 import Container from '@/components/layout/Container';
-import { getDb } from '@/lib/mongodb';
+import PlaceListSection from '@/components/PlaceListSection';
+import PlaceGridSkeleton from '@/components/PlaceGridSkeleton';
 
 export const dynamic = 'force-dynamic';
 
-async function getPlaces() {
-  const db = await getDb();
-  const places = await db
-    .collection('places')
-    .find({})
-    .sort({ createdAt: -1 })
-    .toArray();
-
-  return JSON.parse(JSON.stringify(places));
-}
-
-export default async function HomePage() {
-  const places = await getPlaces();
-
+export default function HomePage() {
   return (
     <div className="flex min-h-dvh flex-col">
       <Navbar />
@@ -30,7 +18,9 @@ export default async function HomePage() {
         }
       />
       <Container as="main" className="flex-1 py-10">
-        <PlaceExplorer places={places} />
+        <Suspense fallback={<PlaceGridSkeleton />}>
+          <PlaceListSection />
+        </Suspense>
       </Container>
       <Footer />
     </div>
