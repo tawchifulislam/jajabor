@@ -9,6 +9,10 @@
   --color-brand: #0f766e;
   --color-brand-soft: #ccfbf1;
   --color-accent: #d97706;
+  --color-brand-dark: #0b5b54;
+  --color-surface-alt: #f3f0ea;
+  --color-line-strong: #d3cdc0;
+  --color-ink-faint: #94a0aa;
 
   --font-display: var(--font-playfair), Georgia, serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
