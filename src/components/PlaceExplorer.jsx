@@ -6,6 +6,7 @@ import PlaceGrid from './PlaceGrid';
 import StatsBar from './StatsBar';
 import SectionHeader from './layout/SectionHeader';
 import AddInviteNote from './AddInviteNote';
+import ListGuidelineNote from './ListGuidelineNote';
 import { SearchX } from 'lucide-react';
 
 export default function PlaceExplorer({ places }) {
@@ -27,6 +28,7 @@ export default function PlaceExplorer({ places }) {
   return (
     <>
       <SectionHeader
+        eyebrow="Your list"
         title="Places I want to go"
         action={<StatsBar places={places} />}
         className="mb-4"
@@ -54,6 +56,8 @@ export default function PlaceExplorer({ places }) {
       ) : (
         <PlaceGrid places={filtered} />
       )}
+
+      {places.length > 0 ? <ListGuidelineNote /> : null}
     </>
   );
 }
