@@ -71,7 +71,7 @@ export default function Hero({ quote, attribution }) {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-5 text-sm tracking-wide text-ink-soft"
           >
-            — {attribution}
+            - {attribution}
           </motion.p>
         ) : null}
       </Container>
