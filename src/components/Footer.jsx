@@ -2,11 +2,12 @@ import Link from 'next/link';
 import { Code2 } from 'lucide-react';
 import JajaborMark from './JajaborMark';
 import MusicPlayer from './MusicPlayer';
+import Container from './layout/Container';
 
 export default function Footer() {
   return (
     <footer className="border-t border-line">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 text-sm text-ink-soft sm:flex-row sm:py-8">
+      <Container className="flex flex-col items-center justify-between gap-4 py-6 text-sm text-ink-soft sm:flex-row sm:py-8">
         <Link
           href="/"
           className="flex items-center gap-1.5 transition hover:text-ink"
@@ -26,7 +27,7 @@ export default function Footer() {
           <Code2 className="h-4 w-4" />
           tawchifulislam
         </a>
-      </div>
+      </Container>
     </footer>
   );
 }
