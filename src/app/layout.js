@@ -1,4 +1,9 @@
-import { Inter, Playfair_Display, Tiro_Bangla } from 'next/font/google';
+import {
+  Inter,
+  Playfair_Display,
+  Tiro_Bangla,
+  Hind_Siliguri,
+} from 'next/font/google';
 import './globals.css';
 import AddFab from '@/components/AddFab';
 import ToastProvider from '@/components/ToastProvider';
@@ -20,6 +25,13 @@ const tiroBangla = Tiro_Bangla({
   subsets: ['bengali'],
   weight: '400',
   variable: '--font-tiro-bangla',
+  display: 'swap',
+});
+
+const hindSiliguri = Hind_Siliguri({
+  subsets: ['bengali'],
+  weight: ['400', '500', '600'],
+  variable: '--font-hind-siliguri',
   display: 'swap',
 });
 
@@ -52,7 +64,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="bn"
-      className={`${inter.variable} ${playfair.variable} ${tiroBangla.variable}`}
+      className={`${inter.variable} ${playfair.variable} ${tiroBangla.variable} ${hindSiliguri.variable}`}
     >
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
         <ToastProvider>
