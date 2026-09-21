@@ -56,7 +56,7 @@ export async function POST(req) {
 
     const doc = {
       title: title.trim(),
-      slug: `${slug}-${Date.now().toString(36)}`, // uniqueness guard
+      slug: `${slug}-${Date.now().toString(36)}`,
       location: location.trim(),
       coverImage,
       gallery: Array.isArray(gallery) ? gallery : [],
@@ -64,6 +64,7 @@ export async function POST(req) {
       bestTime: bestTime?.trim() || '',
       estimatedCost: estimatedCost?.trim() || '',
       notes: notes?.trim() || '',
+      status: 'want-to-go',
       addedBy: {
         id: session.user.id,
         name: session.user.name,

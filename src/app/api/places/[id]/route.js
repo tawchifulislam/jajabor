@@ -33,6 +33,7 @@ export async function PATCH(req, { params }) {
       'bestTime',
       'estimatedCost',
       'notes',
+      'status',
     ];
 
     const update = {};
