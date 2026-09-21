@@ -2,14 +2,16 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import { Upload, X, Loader2 } from 'lucide-react';
+import { UploadCloud, X, Loader2 } from 'lucide-react';
 
 export default function ImageUploader({ value, onChange, multiple = false }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
 
   const images = multiple ? value || [] : value ? [value] : [];
+  const showDropzone = multiple || images.length === 0;
 
   async function uploadFile(file) {
     const sigRes = await fetch('/api/upload', { method: 'POST' });
@@ -29,18 +31,22 @@ export default function ImageUploader({ value, onChange, multiple = false }) {
       { method: 'POST', body: formData },
     );
 
-    if (!uploadRes.ok) throw new Error('Cloudinary upload failed');
+    if (!uploadRes.ok) throw new Error('Upload failed');
     const data = await uploadRes.json();
     return data.secure_url;
   }
 
   async function handleFiles(fileList) {
     setError('');
+    const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+    if (!files.length) {
+      setError('Please choose an image file.');
+      return;
+    }
+
     setUploading(true);
     try {
-      const files = Array.from(fileList);
       const urls = await Promise.all(files.map(uploadFile));
-
       if (multiple) {
         onChange([...(value || []), ...urls]);
       } else {
@@ -64,49 +70,77 @@ export default function ImageUploader({ value, onChange, multiple = false }) {
     }
   }
 
+  function handleDrop(e) {
+    e.preventDefault();
+    setDragActive(false);
+    if (e.dataTransfer.files?.length) handleFiles(e.dataTransfer.files);
+  }
+
   return (
     <div>
-      <div className="flex flex-wrap gap-3">
-        {images.map((url, idx) => (
-          <div
-            key={url + idx}
-            className="relative h-24 w-24 overflow-hidden rounded-lg border border-line"
-          >
-            <Image src={url} alt="" fill className="object-cover" />
-            <button
-              type="button"
-              onClick={() => removeAt(idx)}
-              className="absolute right-1 top-1 rounded-full bg-ink/70 p-1 text-white"
+      {images.length > 0 ? (
+        <div className="mb-3 flex flex-wrap gap-3">
+          {images.map((url, idx) => (
+            <div
+              key={url + idx}
+              className="group relative h-20 w-20 overflow-hidden rounded-lg border border-line"
             >
-              <X className="h-3 w-3" />
-            </button>
-          </div>
-        ))}
+              <Image src={url} alt="" fill className="object-cover" />
+              <button
+                type="button"
+                onClick={() => removeAt(idx)}
+                aria-label="Remove image"
+                className="absolute inset-0 flex items-center justify-center bg-black/0 text-white opacity-0 transition group-hover:bg-black/45 group-hover:opacity-100"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
-        {(multiple || images.length === 0) && (
-          <label className="flex h-24 w-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-line text-ink-soft transition hover:bg-card">
-            {uploading ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <>
-                <Upload className="h-5 w-5" />
-                <span className="text-xs">Upload</span>
-              </>
-            )}
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/*"
-              multiple={multiple}
-              className="hidden"
-              disabled={uploading}
-              onChange={e =>
-                e.target.files?.length && handleFiles(e.target.files)
-              }
-            />
-          </label>
-        )}
-      </div>
+      {showDropzone ? (
+        <label
+          onDragOver={e => {
+            e.preventDefault();
+            setDragActive(true);
+          }}
+          onDragLeave={() => setDragActive(false)}
+          onDrop={handleDrop}
+          className={`flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed px-4 py-6 text-center transition ${
+            dragActive
+              ? 'border-brand bg-brand-soft/40'
+              : 'border-line hover:border-brand/50 hover:bg-surface-alt/40'
+          }`}
+        >
+          {uploading ? (
+            <Loader2 className="h-6 w-6 animate-spin text-brand" />
+          ) : (
+            <>
+              <UploadCloud
+                className="h-6 w-6 text-ink-soft"
+                strokeWidth={1.6}
+              />
+              <p className="text-sm text-ink">
+                <span className="font-medium text-brand">Click to upload</span>{' '}
+                or drag and drop
+              </p>
+              <p className="text-xs text-ink-faint">JPG, PNG or WEBP</p>
+            </>
+          )}
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            multiple={multiple}
+            className="hidden"
+            disabled={uploading}
+            onChange={e =>
+              e.target.files?.length && handleFiles(e.target.files)
+            }
+          />
+        </label>
+      ) : null}
 
       {error ? <p className="mt-2 text-xs text-red-600">{error}</p> : null}
     </div>
