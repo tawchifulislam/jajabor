@@ -15,6 +15,7 @@ import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
+import { isBengali } from '@/lib/isBengali';
 import { headers } from 'next/headers';
 
 async function getPlace(slug) {
@@ -71,11 +72,21 @@ export default async function PlaceDetailPage({ params }) {
 
         <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div>
-            <h1 className="font-display text-2xl text-ink sm:text-3xl">
+            <h1
+              className={`text-2xl text-ink sm:text-3xl ${
+                isBengali(place.title)
+                  ? 'font-bn font-semibold'
+                  : 'font-display'
+              }`}
+            >
               {place.title}
             </h1>
-            <p className="mt-1 flex items-center gap-1.5 text-ink-soft">
-              <MapPin className="h-4 w-4" />
+            <p
+              className={`mt-1 flex items-center gap-1.5 text-ink-soft ${
+                isBengali(place.location) ? 'font-bn' : ''
+              }`}
+            >
+              <MapPin className="h-4 w-4 shrink-0" />
               {place.location}
             </p>
           </div>
@@ -90,7 +101,11 @@ export default async function PlaceDetailPage({ params }) {
               <Navigation className="h-4 w-4 text-brand" />
               How to get there
             </h2>
-            <p className="whitespace-pre-line text-ink-soft">
+            <p
+              className={`whitespace-pre-line text-ink-soft ${
+                isBengali(place.howToGetThere) ? 'font-bn' : ''
+              }`}
+            >
               {place.howToGetThere}
             </p>
           </section>
@@ -102,7 +117,11 @@ export default async function PlaceDetailPage({ params }) {
               <CalendarDays className="h-3.5 w-3.5" />
               Best time
             </p>
-            <p className="mt-1 text-ink">{place.bestTime}</p>
+            <p
+              className={`mt-1 text-ink ${isBengali(place.bestTime) ? 'font-bn' : ''}`}
+            >
+              {place.bestTime}
+            </p>
           </div>
         ) : null}
 
@@ -112,7 +131,11 @@ export default async function PlaceDetailPage({ params }) {
               <RouteIcon className="h-4 w-4 text-brand" />
               Route details
             </h2>
-            <p className="whitespace-pre-line text-ink-soft">
+            <p
+              className={`whitespace-pre-line text-ink-soft ${
+                isBengali(place.estimatedCost) ? 'font-bn' : ''
+              }`}
+            >
               {place.estimatedCost}
             </p>
           </section>
@@ -121,7 +144,13 @@ export default async function PlaceDetailPage({ params }) {
         {place.notes ? (
           <section className="mb-6">
             <h2 className="mb-2 font-display text-lg text-ink">Notes</h2>
-            <p className="whitespace-pre-line text-ink-soft">{place.notes}</p>
+            <p
+              className={`whitespace-pre-line text-ink-soft ${
+                isBengali(place.notes) ? 'font-bn' : ''
+              }`}
+            >
+              {place.notes}
+            </p>
           </section>
         ) : null}
 

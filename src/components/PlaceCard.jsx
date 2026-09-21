@@ -3,12 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin, Images, ArrowRight } from 'lucide-react';
+import { MapPin, Images } from 'lucide-react';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
-
-function isBengali(text) {
-  return /[\u0980-\u09FF]/.test(text);
-}
+import { isBengali } from '@/lib/isBengali';
 
 export default function PlaceCard({ place, index = 0 }) {
   const district = place.location.split(',')[0].trim();
@@ -55,26 +52,22 @@ export default function PlaceCard({ place, index = 0 }) {
           </h3>
 
           {place.howToGetThere ? (
-            <p className="mt-1.5 line-clamp-2 text-sm text-ink-soft">
+            <p
+              className={`mt-1.5 line-clamp-2 text-sm text-ink-soft ${
+                isBengali(place.howToGetThere) ? 'font-bn' : ''
+              }`}
+            >
               {place.howToGetThere}
             </p>
           ) : null}
 
-          <div className="mt-3 flex items-center justify-between border-t border-line pt-3">
-            {place.gallery?.length ? (
-              <span className="flex items-center gap-1 text-xs text-ink-faint">
-                <Images className="h-3.5 w-3.5" />
-                {place.gallery.length} photo
-                {place.gallery.length === 1 ? '' : 's'}
-              </span>
-            ) : (
-              <span />
-            )}
-            <span className="flex items-center gap-1 text-xs font-medium text-brand opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100">
-              View details
-              <ArrowRight className="h-3.5 w-3.5" />
-            </span>
-          </div>
+          {place.gallery?.length ? (
+            <div className="mt-3 flex items-center gap-1 border-t border-line pt-3 text-xs text-ink-faint">
+              <Images className="h-3.5 w-3.5" />
+              {place.gallery.length} photo
+              {place.gallery.length === 1 ? '' : 's'}
+            </div>
+          ) : null}
         </div>
       </Link>
     </motion.div>
