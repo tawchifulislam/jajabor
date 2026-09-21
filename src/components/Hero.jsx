@@ -1,18 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Container from './layout/Container';
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
 export default function Hero({ quote, attribution }) {
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setReducedMotion(mq.matches);
-  }, []);
-
+  const reducedMotion = usePrefersReducedMotion();
   const lines = quote.split('\n');
 
   return (
