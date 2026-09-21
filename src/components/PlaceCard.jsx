@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Images } from 'lucide-react';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
+import StatusToggle from './StatusToggle';
 
 export default function PlaceCard({ place, index = 0 }) {
   const district = place.location.split(',')[0].trim();
@@ -41,7 +42,9 @@ export default function PlaceCard({ place, index = 0 }) {
             <MapPin className="h-3.5 w-3.5 text-brand" />
             <span className={bengaliDistrict ? 'font-bn' : ''}>{district}</span>
           </div>
-
+          <div className="mb-2">
+            <StatusToggle placeId={place._id} status={place.status} />
+          </div>
           <h3
             title={place.title}
             className={`truncate text-base text-ink ${

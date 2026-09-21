@@ -17,6 +17,7 @@ import { isAdmin } from '@/lib/isAdmin';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
 import { headers } from 'next/headers';
+import StatusToggle from '@/components/StatusToggle';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -72,6 +73,13 @@ export default async function PlaceDetailPage({ params }) {
 
         <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div>
+            <div className="mb-2">
+              <StatusToggle
+                placeId={place._id}
+                status={place.status}
+                editable={admin}
+              />
+            </div>
             <h1
               className={`text-2xl text-ink sm:text-3xl ${
                 isBengali(place.title)
