@@ -1,24 +1,20 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import {
-  MapPin,
-  CalendarDays,
-  Route as RouteIcon,
-  Navigation,
-} from 'lucide-react';
+import { MapPin, Route as RouteIcon, Navigation } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AdminActions from '@/components/AdminActions';
 import GalleryLightbox from '@/components/GalleryLightbox';
+import QuickFacts from '@/components/QuickFacts';
+import StatusToggle from '@/components/StatusToggle';
 import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
-import { headers } from 'next/headers';
-import StatusToggle from '@/components/StatusToggle';
 import { getMyStatuses } from '@/lib/placeStatus';
+import { headers } from 'next/headers';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -31,7 +27,7 @@ export async function generateMetadata({ params }) {
   const place = await getPlace(slug);
 
   if (!place) {
-    return { title: 'Place not found - Jajabor' };
+    return { title: 'Place not found — Jajabor' };
   }
 
   const description =
@@ -39,7 +35,7 @@ export async function generateMetadata({ params }) {
     `A place to visit in ${place.location}.`;
 
   return {
-    title: `${place.title} - Jajabor`,
+    title: `${place.title} — Jajabor`,
     description,
     openGraph: {
       title: place.title,
@@ -76,7 +72,7 @@ export default async function PlaceDetailPage({ params }) {
           />
         </div>
 
-        <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
+        <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div>
             <h1
               className={`text-2xl text-ink sm:text-3xl ${
@@ -108,6 +104,11 @@ export default async function PlaceDetailPage({ params }) {
           ) : null}
         </div>
 
+        <QuickFacts
+          bestTime={place.bestTime}
+          photoCount={place.gallery?.length || 0}
+        />
+
         {place.howToGetThere ? (
           <section className="mb-6 rounded-card border border-line bg-card p-5">
             <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
@@ -122,20 +123,6 @@ export default async function PlaceDetailPage({ params }) {
               {place.howToGetThere}
             </p>
           </section>
-        ) : null}
-
-        {place.bestTime ? (
-          <div className="mb-6 rounded-card border border-line bg-card p-4">
-            <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-ink-soft">
-              <CalendarDays className="h-3.5 w-3.5" />
-              Best time
-            </p>
-            <p
-              className={`mt-1 text-ink ${isBengali(place.bestTime) ? 'font-bn' : ''}`}
-            >
-              {place.bestTime}
-            </p>
-          </div>
         ) : null}
 
         {place.estimatedCost ? (
