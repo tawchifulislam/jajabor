@@ -32,7 +32,9 @@ export async function POST(req) {
     const body = await req.json();
     const {
       title,
-      location,
+      district,
+      area,
+      category,
       coverImage,
       gallery,
       howToGetThere,
@@ -41,9 +43,9 @@ export async function POST(req) {
       notes,
     } = body;
 
-    if (!title?.trim() || !location?.trim() || !coverImage) {
+    if (!title?.trim() || !district?.trim() || !area?.trim() || !coverImage) {
       return NextResponse.json(
-        { error: 'title, location, and coverImage are required' },
+        { error: 'title, district, area, and coverImage are required' },
         { status: 400 },
       );
     }
@@ -57,7 +59,9 @@ export async function POST(req) {
     const doc = {
       title: title.trim(),
       slug: `${slug}-${Date.now().toString(36)}`,
-      location: location.trim(),
+      district: district.trim(),
+      area: area.trim(),
+      category: category?.trim() || '',
       coverImage,
       gallery: Array.isArray(gallery) ? gallery : [],
       howToGetThere: howToGetThere?.trim() || '',

@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
   const place = await getPlace(slug);
 
   if (!place) {
-    return { title: 'Place not found — Jajabor' };
+    return { title: 'Place not found - Jajabor' };
   }
 
   const description =
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
     `A place to visit in ${place.location}.`;
 
   return {
-    title: `${place.title} — Jajabor`,
+    title: `${place.title} - Jajabor`,
     description,
     openGraph: {
       title: place.title,

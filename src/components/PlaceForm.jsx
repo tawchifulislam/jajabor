@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ImageUploader from './ImageUploader';
 import FormSection from './FormSection';
+import { DISTRICTS_BY_DIVISION } from '@/lib/districts';
+import { CATEGORIES } from '@/lib/categories';
 import { useToast } from './ToastProvider';
 
 const inputClass =
@@ -28,7 +30,9 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
 
   const [form, setForm] = useState({
     title: initialData?.title || '',
-    location: initialData?.location || '',
+    district: initialData?.district || '',
+    area: initialData?.area || '',
+    category: initialData?.category || '',
     coverImage: initialData?.coverImage || '',
     gallery: initialData?.gallery || [],
     howToGetThere: initialData?.howToGetThere || '',
@@ -50,7 +54,8 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
   function validate() {
     const errors = {};
     if (!form.title.trim()) errors.title = 'Title is required.';
-    if (!form.location.trim()) errors.location = 'Location is required.';
+    if (!form.district) errors.district = 'Choose a district.';
+    if (!form.area.trim()) errors.area = 'Area is required.';
     if (!form.coverImage) errors.coverImage = 'Add a cover photo.';
     return errors;
   }
@@ -112,17 +117,62 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
           <FieldError message={fieldErrors.title} />
         </div>
 
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-ink">
+              District <Required />
+            </label>
+            <select
+              value={form.district}
+              onChange={e => update('district', e.target.value)}
+              className={fieldErrors.district ? inputErrorClass : inputClass}
+            >
+              <option value="">Select a district</option>
+              {Object.entries(DISTRICTS_BY_DIVISION).map(
+                ([division, districts]) => (
+                  <optgroup key={division} label={division}>
+                    {districts.map(d => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </optgroup>
+                ),
+              )}
+            </select>
+            <FieldError message={fieldErrors.district} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-ink">
+              Area <Required />
+            </label>
+            <input
+              value={form.area}
+              onChange={e => update('area', e.target.value)}
+              placeholder="Upazila, thana, or specific spot"
+              className={fieldErrors.area ? inputErrorClass : inputClass}
+            />
+            <FieldError message={fieldErrors.area} />
+          </div>
+        </div>
+
         <div>
           <label className="mb-1 block text-sm font-medium text-ink">
-            Location <Required />
+            Category <span className="text-ink-faint">(optional)</span>
           </label>
-          <input
-            value={form.location}
-            onChange={e => update('location', e.target.value)}
-            placeholder="District or area, country"
-            className={fieldErrors.location ? inputErrorClass : inputClass}
-          />
-          <FieldError message={fieldErrors.location} />
+          <select
+            value={form.category}
+            onChange={e => update('category', e.target.value)}
+            className={inputClass}
+          >
+            <option value="">Not specified</option>
+            {CATEGORIES.map(c => (
+              <option key={c.value} value={c.value}>
+                {c.label}
+              </option>
+            ))}
+          </select>
         </div>
       </FormSection>
 

@@ -26,7 +26,9 @@ export async function PATCH(req, { params }) {
 
     const allowed = [
       'title',
-      'location',
+      'district',
+      'area',
+      'category',
       'coverImage',
       'gallery',
       'howToGetThere',
