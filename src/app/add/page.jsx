@@ -1,15 +1,13 @@
-'use client';
-
-import { useSession, signIn } from '@/lib/auth-client';
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PlaceForm from '@/components/PlaceForm';
+import SignInPrompt from '@/components/SignInPrompt';
 import Container from '@/components/layout/Container';
 
-export default function AddPlacePage() {
-  const { data: session, isPending } = useSession();
-
-  if (isPending) return null;
+export default async function AddPlacePage() {
+  const session = await auth.api.getSession({ headers: await headers() });
 
   if (!session?.user) {
     return (
@@ -19,20 +17,7 @@ export default function AddPlacePage() {
           as="main"
           className="flex flex-1 items-center justify-center py-24"
         >
-          <div className="mx-auto flex max-w-md flex-col items-center gap-4 text-center">
-            <h1 className="font-display text-2xl text-ink">Sign in required</h1>
-            <p className="text-ink-soft">
-              You need a Google account to add a place.
-            </p>
-            <button
-              onClick={() =>
-                signIn.social({ provider: 'google', callbackURL: '/add' })
-              }
-              className="rounded-full bg-brand px-6 py-2.5 font-medium text-white transition hover:bg-brand-dark"
-            >
-              Sign in with Google
-            </button>
-          </div>
+          <SignInPrompt />
         </Container>
         <Footer />
       </div>

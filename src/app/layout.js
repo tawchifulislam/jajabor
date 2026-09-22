@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import {
   Inter,
   Playfair_Display,
@@ -7,27 +8,26 @@ import {
 import './globals.css';
 import AddFab from '@/components/AddFab';
 import ToastProvider from '@/components/ToastProvider';
+import { SessionProvider } from '@/components/SessionProvider';
 import { MotionConfig } from 'framer-motion';
+import { auth } from '@/lib/auth';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
-
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
 });
-
 const tiroBangla = Tiro_Bangla({
   subsets: ['bengali'],
   weight: '400',
   variable: '--font-tiro-bangla',
   display: 'swap',
 });
-
 const hindSiliguri = Hind_Siliguri({
   subsets: ['bengali'],
   weight: ['400', '500', '600'],
@@ -43,9 +43,7 @@ export const metadata = {
   title: 'Jajabor',
   description:
     'A personal log of places to visit - photos, routes, and travel notes.',
-  icons: {
-    icon: '/favicon.ico',
-  },
+  icons: { icon: '/favicon.ico' },
   openGraph: {
     title: 'Jajabor',
     description:
@@ -56,11 +54,12 @@ export const metadata = {
   },
 };
 
-export const viewport = {
-  themeColor: '#0f766e',
-};
+export const viewport = { themeColor: '#0f766e' };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  const user = session?.user || null;
+
   return (
     <html
       lang="bn"
@@ -68,10 +67,12 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
         <ToastProvider>
-          <MotionConfig reducedMotion="user">
-            {children}
-            <AddFab />
-          </MotionConfig>
+          <SessionProvider user={user}>
+            <MotionConfig reducedMotion="user">
+              {children}
+              <AddFab />
+            </MotionConfig>
+          </SessionProvider>
         </ToastProvider>
       </body>
     </html>

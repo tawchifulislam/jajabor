@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
-import { useSession } from '@/lib/auth-client';
+import { useAppSession } from './SessionProvider';
 
 export default function AddFab() {
-  const { data: session } = useSession();
+  const user = useAppSession();
 
-  if (!session?.user) return null;
+  if (!user) return null;
 
   return (
     <Link

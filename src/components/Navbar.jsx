@@ -1,13 +1,24 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Plus, LogIn, LogOut } from "lucide-react";
-import { useSession, signIn, signOut } from "@/lib/auth-client";
-import JajaborMark from "./JajaborMark";
-import Container from "./layout/Container";
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Plus, LogIn, LogOut, Loader2 } from 'lucide-react';
+import { signIn, signOut } from '@/lib/auth-client';
+import { useAppSession } from './SessionProvider';
+import JajaborMark from './JajaborMark';
+import Container from './layout/Container';
 
 export default function Navbar() {
-  const { data: session, isPending } = useSession();
+  const user = useAppSession();
+  const router = useRouter();
+  const [signingOut, setSigningOut] = useState(false);
+
+  async function handleSignOut() {
+    setSigningOut(true);
+    await signOut();
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur">
@@ -20,7 +31,7 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {isPending ? null : session?.user ? (
+          {user ? (
             <>
               <Link
                 href="/add"
@@ -30,16 +41,23 @@ export default function Navbar() {
                 Add place
               </Link>
               <button
-                onClick={() => signOut()}
-                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-ink-soft transition hover:bg-card"
-                title={session.user.email}
+                onClick={handleSignOut}
+                disabled={signingOut}
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-ink-soft transition hover:bg-card disabled:opacity-50"
+                title={user.email}
               >
-                <LogOut className="h-4 w-4" />
+                {signingOut ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <LogOut className="h-4 w-4" />
+                )}
               </button>
             </>
           ) : (
             <button
-              onClick={() => signIn.social({ provider: "google", callbackURL: "/" })}
+              onClick={() =>
+                signIn.social({ provider: 'google', callbackURL: '/' })
+              }
               className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm font-medium text-ink transition hover:bg-card"
             >
               <LogIn className="h-4 w-4" />
