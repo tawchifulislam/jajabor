@@ -15,6 +15,11 @@ export default function PlaceExplorer({
   isLoggedIn = false,
 }) {
   const [query, setQuery] = useState('');
+  const [statuses, setStatuses] = useState(myStatuses);
+
+  function handleStatusChange(placeId, next) {
+    setStatuses(prev => ({ ...prev, [placeId]: next }));
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -30,7 +35,7 @@ export default function PlaceExplorer({
   }, [places, query]);
 
   const visitedCount = isLoggedIn
-    ? places.filter(p => myStatuses[p._id] === 'visited').length
+    ? places.filter(p => statuses[p._id] === 'visited').length
     : null;
 
   return (
@@ -42,7 +47,7 @@ export default function PlaceExplorer({
         className="mb-4"
       />
 
-      <AddInviteNote />
+      <AddInviteNote isLoggedIn={isLoggedIn} />
 
       {places.length > 0 ? (
         <div className="mb-6">
@@ -64,8 +69,9 @@ export default function PlaceExplorer({
       ) : (
         <PlaceGrid
           places={filtered}
-          myStatuses={myStatuses}
+          myStatuses={statuses}
           isLoggedIn={isLoggedIn}
+          onStatusChange={handleStatusChange}
         />
       )}
 

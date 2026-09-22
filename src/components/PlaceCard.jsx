@@ -13,6 +13,7 @@ export default function PlaceCard({
   index = 0,
   status,
   editable = false,
+  onStatusChange,
 }) {
   const district = place.location.split(',')[0].trim();
   const bengaliTitle = isBengali(place.title);
@@ -57,6 +58,7 @@ export default function PlaceCard({
               placeId={place._id}
               status={status}
               editable={editable}
+              onChange={onStatusChange}
             />
           </div>
 

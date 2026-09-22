@@ -9,7 +9,12 @@ const LABELS = {
   visited: 'ঘুরে এসেছি',
 };
 
-export default function StatusToggle({ placeId, status, editable = false }) {
+export default function StatusToggle({
+  placeId,
+  status,
+  editable = false,
+  onChange,
+}) {
   const { showToast } = useToast();
   const [current, setCurrent] = useState(status || 'want-to-go');
   const [loading, setLoading] = useState(false);
@@ -32,6 +37,7 @@ export default function StatusToggle({ placeId, status, editable = false }) {
       });
       if (!res.ok) throw new Error('Update failed');
       setCurrent(next);
+      onChange?.(placeId, next);
       showToast(
         next === 'visited' ? 'Marked as visited' : 'Moved back to want-to-go',
       );
