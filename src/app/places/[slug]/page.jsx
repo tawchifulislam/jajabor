@@ -13,9 +13,9 @@ import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
+import { displayLocation } from '@/lib/placeDisplay';
 import { getMyStatuses } from '@/lib/placeStatus';
 import { headers } from 'next/headers';
-import { displayLocation } from '@/lib/placeDisplay';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -28,15 +28,15 @@ export async function generateMetadata({ params }) {
   const place = await getPlace(slug);
 
   if (!place) {
-    return { title: 'Place not found - Jajabor' };
+    return { title: 'Place not found — Jajabor' };
   }
 
   const description =
     place.howToGetThere?.slice(0, 155) ||
-    `A place to visit in ${place.location}.`;
+    `A place to visit in ${displayLocation(place)}.`;
 
   return {
-    title: `${place.title} - Jajabor`,
+    title: `${place.title} — Jajabor`,
     description,
     openGraph: {
       title: place.title,
@@ -62,7 +62,7 @@ export default async function PlaceDetailPage({ params }) {
     <div className="flex min-h-dvh flex-col">
       <Navbar />
       <Container as="main" size="narrow" className="flex-1 py-10">
-        <div className="relative mb-6 h-64 w-full overflow-hidden rounded-card sm:h-72">
+        <div className="relative mb-3 h-64 w-full overflow-hidden rounded-card sm:h-72">
           <Image
             src={cloudinaryUrl(place.coverImage, 1200)}
             alt={place.title}
@@ -72,6 +72,10 @@ export default async function PlaceDetailPage({ params }) {
             priority
           />
         </div>
+
+        {place.gallery?.length ? (
+          <GalleryLightbox images={place.gallery} alt={place.title} />
+        ) : null}
 
         <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div>
@@ -153,13 +157,6 @@ export default async function PlaceDetailPage({ params }) {
             >
               {place.notes}
             </p>
-          </section>
-        ) : null}
-
-        {place.gallery?.length ? (
-          <section>
-            <h2 className="mb-3 font-display text-lg text-ink">Gallery</h2>
-            <GalleryLightbox images={place.gallery} alt={place.title} />
           </section>
         ) : null}
       </Container>

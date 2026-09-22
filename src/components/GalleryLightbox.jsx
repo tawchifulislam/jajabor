@@ -33,18 +33,18 @@ export default function GalleryLightbox({ images, alt }) {
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+      <div className="mb-6 flex gap-2 overflow-x-auto pb-1">
         {images.map((url, idx) => (
           <button
             key={idx}
             onClick={() => setActiveIndex(idx)}
-            className="group relative aspect-square overflow-hidden rounded-lg border border-line/70"
+            className="group relative h-20 w-20 shrink-0 overflow-hidden rounded-lg border border-line/70 transition hover:border-brand/50"
           >
             <Image
-              src={cloudinaryUrl(url, 300)}
+              src={cloudinaryUrl(url, 200)}
               alt=""
               fill
-              sizes="(max-width: 640px) 33vw, 200px"
+              sizes="80px"
               className="object-cover transition duration-300 group-hover:scale-105"
             />
           </button>
