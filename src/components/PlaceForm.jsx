@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ImageUploader from './ImageUploader';
 import FormSection from './FormSection';
+import { useToast } from './ToastProvider';
 
 const inputClass =
   'w-full rounded-lg border border-line bg-card px-3 py-2 text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10';
@@ -22,6 +23,7 @@ function FieldError({ message }) {
 
 export default function PlaceForm({ initialData = null, placeId = null }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const isEdit = Boolean(placeId);
 
   const [form, setForm] = useState({
@@ -80,6 +82,7 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
       }
 
       const data = await res.json();
+      showToast(isEdit ? 'Changes saved' : 'Place added to your list');
       router.push(`/places/${data.place.slug}`);
       router.refresh();
     } catch (err) {

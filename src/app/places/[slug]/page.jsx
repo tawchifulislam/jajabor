@@ -18,6 +18,7 @@ import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
 import { headers } from 'next/headers';
 import StatusToggle from '@/components/StatusToggle';
+import { getMyStatuses } from '@/lib/placeStatus';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -55,6 +56,10 @@ export default async function PlaceDetailPage({ params }) {
 
   const session = await auth.api.getSession({ headers: await headers() });
   const admin = isAdmin(session);
+  const isLoggedIn = Boolean(session?.user);
+  const myStatus = isLoggedIn
+    ? (await getMyStatuses(session.user.id, [place._id]))[place._id]
+    : undefined;
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -73,13 +78,6 @@ export default async function PlaceDetailPage({ params }) {
 
         <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
           <div>
-            <div className="mb-2">
-              <StatusToggle
-                placeId={place._id}
-                status={place.status}
-                editable={admin}
-              />
-            </div>
             <h1
               className={`text-2xl text-ink sm:text-3xl ${
                 isBengali(place.title)
@@ -89,14 +87,21 @@ export default async function PlaceDetailPage({ params }) {
             >
               {place.title}
             </h1>
-            <p
-              className={`mt-1 flex items-center gap-1.5 text-ink-soft ${
-                isBengali(place.location) ? 'font-bn' : ''
-              }`}
-            >
-              <MapPin className="h-4 w-4 shrink-0" />
-              {place.location}
-            </p>
+            <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
+              <p
+                className={`flex items-center gap-1.5 text-ink-soft ${
+                  isBengali(place.location) ? 'font-bn' : ''
+                }`}
+              >
+                <MapPin className="h-4 w-4 shrink-0" />
+                {place.location}
+              </p>
+              <StatusToggle
+                placeId={place._id}
+                status={myStatus}
+                editable={isLoggedIn}
+              />
+            </div>
           </div>
           {admin ? (
             <AdminActions placeId={place._id} slug={place.slug} />

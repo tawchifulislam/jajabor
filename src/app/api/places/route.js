@@ -64,7 +64,6 @@ export async function POST(req) {
       bestTime: bestTime?.trim() || '',
       estimatedCost: estimatedCost?.trim() || '',
       notes: notes?.trim() || '',
-      status: 'want-to-go',
       addedBy: {
         id: session.user.id,
         name: session.user.name,
