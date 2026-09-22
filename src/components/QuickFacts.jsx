@@ -1,8 +1,14 @@
 import { CalendarDays, Images } from 'lucide-react';
 import { isBengali } from '@/lib/isBengali';
+import { getCategory } from '@/lib/categories';
 
-export default function QuickFacts({ bestTime, photoCount }) {
+export default function QuickFacts({ category, bestTime, photoCount }) {
   const items = [];
+  const cat = getCategory(category);
+
+  if (cat) {
+    items.push({ icon: cat.icon, content: cat.label, bengali: true });
+  }
 
   if (bestTime) {
     items.push({

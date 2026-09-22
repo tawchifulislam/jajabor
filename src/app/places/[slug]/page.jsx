@@ -15,6 +15,7 @@ import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
 import { getMyStatuses } from '@/lib/placeStatus';
 import { headers } from 'next/headers';
+import { displayLocation } from '@/lib/placeDisplay';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -86,11 +87,11 @@ export default async function PlaceDetailPage({ params }) {
             <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
               <p
                 className={`flex items-center gap-1.5 text-ink-soft ${
-                  isBengali(place.location) ? 'font-bn' : ''
+                  isBengali(displayLocation(place)) ? 'font-bn' : ''
                 }`}
               >
                 <MapPin className="h-4 w-4 shrink-0" />
-                {place.location}
+                {displayLocation(place)}
               </p>
               <StatusToggle
                 placeId={place._id}
@@ -105,6 +106,7 @@ export default async function PlaceDetailPage({ params }) {
         </div>
 
         <QuickFacts
+          category={place.category}
           bestTime={place.bestTime}
           photoCount={place.gallery?.length || 0}
         />

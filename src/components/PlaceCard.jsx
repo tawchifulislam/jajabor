@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Images, MapPin } from 'lucide-react';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
+import { displayLocation } from '@/lib/placeDisplay';
 import StatusToggle from './StatusToggle';
 
 export default function PlaceCard({
@@ -15,9 +16,9 @@ export default function PlaceCard({
   editable = false,
   onStatusChange,
 }) {
-  const district = place.location.split(',')[0].trim();
+  const location = displayLocation(place);
   const bengaliTitle = isBengali(place.title);
-  const bengaliDistrict = isBengali(district);
+  const bengaliLocation = isBengali(location);
   const href = `/places/${place.slug}`;
 
   return (
@@ -50,8 +51,8 @@ export default function PlaceCard({
           <div className="mb-1.5 flex items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-1.5 text-xs font-medium text-ink-soft">
               <MapPin className="h-3.5 w-3.5 shrink-0 text-brand" />
-              <span className={`truncate ${bengaliDistrict ? 'font-bn' : ''}`}>
-                {district}
+              <span className={`truncate ${bengaliLocation ? 'font-bn' : ''}`}>
+                {location}
               </span>
             </div>
             <StatusToggle
