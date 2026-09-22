@@ -2,8 +2,7 @@ import { MapPin, Compass, CheckCircle2 } from 'lucide-react';
 
 export default function StatsBar({ places, visitedCount }) {
   const totalPlaces = places.length;
-  const districts = new Set(places.map(p => p.location.split(',')[0].trim()))
-    .size;
+  const districts = new Set(places.map(p => p.district).filter(Boolean)).size;
 
   if (totalPlaces === 0) return null;
 

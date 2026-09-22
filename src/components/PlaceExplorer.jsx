@@ -26,7 +26,13 @@ export default function PlaceExplorer({
     if (!q) return places;
 
     return places.filter(place => {
-      const haystack = [place.title, place.location, place.howToGetThere]
+      const haystack = [
+        place.title,
+        place.district,
+        place.area,
+        place.location,
+        place.howToGetThere,
+      ]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
