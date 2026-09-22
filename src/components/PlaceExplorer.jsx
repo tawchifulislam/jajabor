@@ -9,7 +9,11 @@ import AddInviteNote from './AddInviteNote';
 import ListGuidelineNote from './ListGuidelineNote';
 import { SearchX } from 'lucide-react';
 
-export default function PlaceExplorer({ places }) {
+export default function PlaceExplorer({
+  places,
+  myStatuses = {},
+  isLoggedIn = false,
+}) {
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
@@ -25,12 +29,16 @@ export default function PlaceExplorer({ places }) {
     });
   }, [places, query]);
 
+  const visitedCount = isLoggedIn
+    ? places.filter(p => myStatuses[p._id] === 'visited').length
+    : null;
+
   return (
     <>
       <SectionHeader
         eyebrow="Your list"
         title="Places I want to go"
-        action={<StatsBar places={places} />}
+        action={<StatsBar places={places} visitedCount={visitedCount} />}
         className="mb-4"
       />
 
@@ -54,7 +62,11 @@ export default function PlaceExplorer({ places }) {
           </button>
         </div>
       ) : (
-        <PlaceGrid places={filtered} />
+        <PlaceGrid
+          places={filtered}
+          myStatuses={myStatuses}
+          isLoggedIn={isLoggedIn}
+        />
       )}
 
       {places.length > 0 ? <ListGuidelineNote /> : null}

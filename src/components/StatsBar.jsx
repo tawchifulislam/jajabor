@@ -1,10 +1,9 @@
 import { MapPin, Compass, CheckCircle2 } from 'lucide-react';
 
-export default function StatsBar({ places }) {
+export default function StatsBar({ places, visitedCount }) {
   const totalPlaces = places.length;
   const districts = new Set(places.map(p => p.location.split(',')[0].trim()))
     .size;
-  const visited = places.filter(p => p.status === 'visited').length;
 
   if (totalPlaces === 0) return null;
 
@@ -23,13 +22,14 @@ export default function StatsBar({ places }) {
           <strong className="text-ink">{districts}</strong> districts
         </span>
       </div>
-      {visited > 0 ? (
+      {visitedCount !== null && visitedCount !== undefined ? (
         <>
           <div className="h-4 w-px bg-line" />
           <div className="flex items-center gap-1.5">
             <CheckCircle2 className="h-4 w-4 text-emerald-600" />
             <span className="text-sm text-ink-soft">
-              <strong className="text-ink">{visited}</strong> visited
+              <strong className="text-ink">{visitedCount}</strong> visited by
+              you
             </span>
           </div>
         </>
