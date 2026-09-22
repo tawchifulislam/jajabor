@@ -14,15 +14,18 @@ export default function StatusToggle({ placeId, status, editable = false }) {
   const [current, setCurrent] = useState(status || 'want-to-go');
   const [loading, setLoading] = useState(false);
 
-  const isVisited = current === 'visited';
-  const Tag = editable ? 'button' : 'span';
+  if (!editable) return null;
 
-  async function toggle() {
-    if (!editable || loading) return;
+  const isVisited = current === 'visited';
+
+  async function toggle(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (loading) return;
     const next = isVisited ? 'want-to-go' : 'visited';
     setLoading(true);
     try {
-      const res = await fetch(`/api/places/${placeId}`, {
+      const res = await fetch(`/api/place-status/${placeId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: next }),
@@ -30,26 +33,24 @@ export default function StatusToggle({ placeId, status, editable = false }) {
       if (!res.ok) throw new Error('Update failed');
       setCurrent(next);
       showToast(
-        next === 'visited'
-          ? 'ঘুরে আসা হয়েছে বলে চিহ্নিত হলো'
-          : 'আবার "যেতে চাই"-তে ফেরত গেলো',
+        next === 'visited' ? 'Marked as visited' : 'Moved back to want-to-go',
       );
     } catch {
-      showToast('Status বদলানো যায়নি', 'error');
+      showToast("Couldn't update status", 'error');
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <Tag
-      onClick={editable ? toggle : undefined}
+    <button
+      onClick={toggle}
       disabled={loading}
-      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-bn text-xs font-medium transition ${
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 font-bn text-xs font-medium transition hover:opacity-80 ${
         isVisited
           ? 'bg-emerald-50 text-emerald-700'
           : 'bg-brand-soft text-brand-dark'
-      } ${editable ? 'cursor-pointer hover:opacity-80' : ''}`}
+      }`}
     >
       {loading ? (
         <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -59,6 +60,6 @@ export default function StatusToggle({ placeId, status, editable = false }) {
         <Compass className="h-3.5 w-3.5" />
       )}
       {LABELS[current]}
-    </Tag>
+    </button>
   );
 }
