@@ -6,6 +6,8 @@ import {
   Hind_Siliguri,
 } from 'next/font/google';
 import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import AddFab from '@/components/AddFab';
 import ToastProvider from '@/components/ToastProvider';
 import { SessionProvider } from '@/components/SessionProvider';
@@ -42,12 +44,12 @@ export const metadata = {
   metadataBase: new URL(siteUrl),
   title: 'Jajabor',
   description:
-    'A personal log of places to visit - photos, routes, and travel notes.',
+    'A personal log of places to visit — photos, routes, and travel notes.',
   icons: { icon: '/favicon.ico' },
   openGraph: {
     title: 'Jajabor',
     description:
-      'A personal log of places to visit - photos, routes, and travel notes.',
+      'A personal log of places to visit — photos, routes, and travel notes.',
     url: siteUrl,
     siteName: 'Jajabor',
     type: 'website',
@@ -69,7 +71,11 @@ export default async function RootLayout({ children }) {
         <ToastProvider>
           <SessionProvider user={user}>
             <MotionConfig reducedMotion="user">
-              {children}
+              <div className="flex min-h-dvh flex-col">
+                <Navbar />
+                <div className="flex flex-1 flex-col">{children}</div>
+                <Footer />
+              </div>
               <AddFab />
             </MotionConfig>
           </SessionProvider>

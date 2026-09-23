@@ -1,25 +1,26 @@
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { MapPin, Route as RouteIcon, Navigation } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import AdminActions from '@/components/AdminActions';
-import GalleryLightbox from '@/components/GalleryLightbox';
-import QuickFacts from '@/components/QuickFacts';
-import StatusToggle from '@/components/StatusToggle';
-import Container from '@/components/layout/Container';
-import { getDb } from '@/lib/mongodb';
-import { auth } from '@/lib/auth';
-import { isAdmin } from '@/lib/isAdmin';
-import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
-import { isBengali } from '@/lib/isBengali';
-import { displayLocation } from '@/lib/placeDisplay';
-import { getMyStatuses } from '@/lib/placeStatus';
-import { headers } from 'next/headers';
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { MapPin } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import AdminActions from "@/components/AdminActions";
+import GalleryLightbox from "@/components/GalleryLightbox";
+import QuickFacts from "@/components/QuickFacts";
+import PlanningSection from "@/components/PlanningSection";
+import StatusToggle from "@/components/StatusToggle";
+import Container from "@/components/layout/Container";
+import { getDb } from "@/lib/mongodb";
+import { auth } from "@/lib/auth";
+import { isAdmin } from "@/lib/isAdmin";
+import { cloudinaryUrl } from "@/lib/cloudinaryUrl";
+import { isBengali } from "@/lib/isBengali";
+import { displayLocation } from "@/lib/placeDisplay";
+import { getMyStatuses } from "@/lib/placeStatus";
+import { headers } from "next/headers";
 
 async function getPlace(slug) {
   const db = await getDb();
-  const place = await db.collection('places').findOne({ slug });
+  const place = await db.collection("places").findOne({ slug });
   return place ? JSON.parse(JSON.stringify(place)) : null;
 }
 
@@ -28,12 +29,11 @@ export async function generateMetadata({ params }) {
   const place = await getPlace(slug);
 
   if (!place) {
-    return { title: 'Place not found — Jajabor' };
+    return { title: "Place not found — Jajabor" };
   }
 
   const description =
-    place.howToGetThere?.slice(0, 155) ||
-    `A place to visit in ${displayLocation(place)}.`;
+    place.howToGetThere?.slice(0, 155) || `A place to visit in ${displayLocation(place)}.`;
 
   return {
     title: `${place.title} — Jajabor`,
@@ -81,9 +81,7 @@ export default async function PlaceDetailPage({ params }) {
           <div>
             <h1
               className={`text-2xl text-ink sm:text-3xl ${
-                isBengali(place.title)
-                  ? 'font-bn font-semibold'
-                  : 'font-display'
+                isBengali(place.title) ? "font-bn font-semibold" : "font-display"
               }`}
             >
               {place.title}
@@ -91,22 +89,16 @@ export default async function PlaceDetailPage({ params }) {
             <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
               <p
                 className={`flex items-center gap-1.5 text-ink-soft ${
-                  isBengali(displayLocation(place)) ? 'font-bn' : ''
+                  isBengali(displayLocation(place)) ? "font-bn" : ""
                 }`}
               >
                 <MapPin className="h-4 w-4 shrink-0" />
                 {displayLocation(place)}
               </p>
-              <StatusToggle
-                placeId={place._id}
-                status={myStatus}
-                editable={isLoggedIn}
-              />
+              <StatusToggle placeId={place._id} status={myStatus} editable={isLoggedIn} />
             </div>
           </div>
-          {admin ? (
-            <AdminActions placeId={place._id} slug={place.slug} />
-          ) : null}
+          {admin ? <AdminActions placeId={place._id} slug={place.slug} /> : null}
         </div>
 
         <QuickFacts
@@ -115,50 +107,23 @@ export default async function PlaceDetailPage({ params }) {
           photoCount={place.gallery?.length || 0}
         />
 
-        {place.howToGetThere ? (
-          <section className="mb-6 rounded-card border border-line bg-card p-5">
-            <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
-              <Navigation className="h-4 w-4 text-brand" />
-              How to get there
-            </h2>
-            <p
-              className={`whitespace-pre-line text-ink-soft ${
-                isBengali(place.howToGetThere) ? 'font-bn' : ''
-              }`}
-            >
-              {place.howToGetThere}
-            </p>
-          </section>
-        ) : null}
-
-        {place.estimatedCost ? (
-          <section className="mb-6 rounded-card border border-line bg-card p-5">
-            <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
-              <RouteIcon className="h-4 w-4 text-brand" />
-              Route details
-            </h2>
-            <p
-              className={`whitespace-pre-line text-ink-soft ${
-                isBengali(place.estimatedCost) ? 'font-bn' : ''
-              }`}
-            >
-              {place.estimatedCost}
-            </p>
-          </section>
-        ) : null}
-
         {place.notes ? (
           <section className="mb-6">
             <h2 className="mb-2 font-display text-lg text-ink">Notes</h2>
             <p
               className={`whitespace-pre-line text-ink-soft ${
-                isBengali(place.notes) ? 'font-bn' : ''
+                isBengali(place.notes) ? "font-bn" : ""
               }`}
             >
               {place.notes}
             </p>
           </section>
         ) : null}
+
+        <PlanningSection
+          howToGetThere={place.howToGetThere}
+          estimatedCost={place.estimatedCost}
+        />
       </Container>
       <Footer />
     </div>
