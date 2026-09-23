@@ -1,10 +1,11 @@
 'use client';
 
 import { MapPinned, LogIn } from 'lucide-react';
-import { signIn, useSession } from '@/lib/auth-client';
+import { signIn } from '@/lib/auth-client';
+import { useAppSession } from './SessionProvider';
 
 export default function EmptyState() {
-  const { data: session } = useSession();
+  const user = useAppSession();
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-4 rounded-card border border-dashed border-line bg-card/40 px-6 py-20 text-center sm:py-28">
@@ -15,13 +16,13 @@ export default function EmptyState() {
       <div>
         <p className="font-display text-xl text-ink">No places yet</p>
         <p className="mx-auto mt-1.5 max-w-sm text-sm text-ink-soft">
-          {session?.user
+          {user
             ? "You haven't added any places yet - start with the first one."
             : 'Sign in and add the first place you want to visit.'}
         </p>
       </div>
 
-      {!session?.user ? (
+      {!user ? (
         <button
           onClick={() =>
             signIn.social({ provider: 'google', callbackURL: '/add' })

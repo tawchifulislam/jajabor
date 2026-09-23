@@ -57,7 +57,7 @@ export default function PlaceActions({ placeId, slug, canEdit, canDelete }) {
         <ConfirmDialog
           open={confirmOpen}
           title="Delete this place?"
-          description="This can't be undone — the entry and its photos will be removed from your list."
+          description="This can't be undone - the entry and its photos will be removed from your list."
           confirmLabel="Delete"
           danger
           loading={deleting}

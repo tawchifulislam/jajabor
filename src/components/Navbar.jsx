@@ -1,24 +1,15 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Plus, LogIn, LogOut, Loader2 } from 'lucide-react';
-import { signIn, signOut } from '@/lib/auth-client';
+import { Plus, LogIn } from 'lucide-react';
+import { signIn } from '@/lib/auth-client';
 import { useAppSession } from './SessionProvider';
+import ProfileMenu from './ProfileMenu';
 import JajaborMark from './JajaborMark';
 import Container from './layout/Container';
 
 export default function Navbar() {
   const user = useAppSession();
-  const router = useRouter();
-  const [signingOut, setSigningOut] = useState(false);
-
-  async function handleSignOut() {
-    setSigningOut(true);
-    await signOut();
-    router.refresh();
-  }
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur">
@@ -40,18 +31,7 @@ export default function Navbar() {
                 <Plus className="h-4 w-4" />
                 Add place
               </Link>
-              <button
-                onClick={handleSignOut}
-                disabled={signingOut}
-                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-ink-soft transition hover:bg-card disabled:opacity-50"
-                title={user.email}
-              >
-                {signingOut ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <LogOut className="h-4 w-4" />
-                )}
-              </button>
+              <ProfileMenu />
             </>
           ) : (
             <button

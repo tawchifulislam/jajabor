@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MapPin } from 'lucide-react';
-import AdminActions from '@/components/AdminActions';
+import PlaceActions from '@/components/PlaceActions';
 import GalleryLightbox from '@/components/GalleryLightbox';
 import QuickFacts from '@/components/QuickFacts';
 import PlanningSection from '@/components/PlanningSection';
@@ -11,6 +11,7 @@ import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { isAdmin } from '@/lib/isAdmin';
+import { canEditPlace } from '@/lib/canEditPlace';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
 import { displayLocation } from '@/lib/placeDisplay';
@@ -53,6 +54,7 @@ export default async function PlaceDetailPage({ params }) {
 
   const session = await auth.api.getSession({ headers: await headers() });
   const admin = isAdmin(session);
+  const editAllowed = canEditPlace(place, session);
   const isLoggedIn = Boolean(session?.user);
   const myStatus = isLoggedIn
     ? (await getMyStatuses(session.user.id, [place._id]))[place._id]
@@ -102,7 +104,12 @@ export default async function PlaceDetailPage({ params }) {
             />
           </div>
         </div>
-        {admin ? <AdminActions placeId={place._id} slug={place.slug} /> : null}
+        <PlaceActions
+          placeId={place._id}
+          slug={place.slug}
+          canEdit={editAllowed}
+          canDelete={admin}
+        />
       </div>
 
       <QuickFacts
