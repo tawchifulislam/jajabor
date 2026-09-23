@@ -4,7 +4,7 @@ import PlaceForm from '@/components/PlaceForm';
 import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
-import { isAdmin } from '@/lib/isAdmin';
+import { canEditPlace } from '@/lib/canEditPlace';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -14,12 +14,11 @@ async function getPlace(slug) {
 
 export default async function EditPlacePage({ params }) {
   const { slug } = await params;
-  const session = await auth.api.getSession({ headers: await headers() });
-
-  if (!isAdmin(session)) redirect('/');
-
   const place = await getPlace(slug);
   if (!place) notFound();
+
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!canEditPlace(place, session)) redirect('/');
 
   return (
     <Container as="main" size="form" className="flex-1 py-10">

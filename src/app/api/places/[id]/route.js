@@ -3,17 +3,12 @@ import { ObjectId } from 'mongodb';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { isAdmin } from '@/lib/isAdmin';
-
-async function requireAdmin(req) {
-  const session = await auth.api.getSession({ headers: req.headers });
-  if (!isAdmin(session)) return null;
-  return session;
-}
+import { canEditPlace } from '@/lib/canEditPlace';
 
 export async function PATCH(req, { params }) {
-  const session = await requireAdmin(req);
-  if (!session) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  const session = await auth.api.getSession({ headers: req.headers });
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const { id } = await params;
@@ -22,8 +17,19 @@ export async function PATCH(req, { params }) {
   }
 
   try {
-    const body = await req.json();
+    const db = await getDb();
+    const existing = await db
+      .collection('places')
+      .findOne({ _id: new ObjectId(id) });
+    if (!existing) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
 
+    if (!canEditPlace(existing, session)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    const body = await req.json();
     const allowed = [
       'title',
       'district',
@@ -43,7 +49,6 @@ export async function PATCH(req, { params }) {
     }
     update.updatedAt = new Date();
 
-    const db = await getDb();
     const result = await db
       .collection('places')
       .findOneAndUpdate(
@@ -51,10 +56,6 @@ export async function PATCH(req, { params }) {
         { $set: update },
         { returnDocument: 'after' },
       );
-
-    if (!result) {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    }
 
     return NextResponse.json({ place: result });
   } catch (err) {
@@ -67,8 +68,8 @@ export async function PATCH(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
-  const session = await requireAdmin(req);
-  if (!session) {
+  const session = await auth.api.getSession({ headers: req.headers });
+  if (!isAdmin(session)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
