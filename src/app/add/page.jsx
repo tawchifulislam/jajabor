@@ -1,7 +1,5 @@
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import PlaceForm from '@/components/PlaceForm';
 import SignInPrompt from '@/components/SignInPrompt';
 import Container from '@/components/layout/Container';
@@ -12,21 +10,18 @@ export default async function AddPlacePage() {
   if (!session?.user) {
     return (
       <div className="flex min-h-dvh flex-col">
-        <Navbar />
         <Container
           as="main"
           className="flex flex-1 items-center justify-center py-24"
         >
           <SignInPrompt />
         </Container>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <Navbar />
       <Container as="main" size="form" className="flex-1 py-10">
         <h1 className="mb-2 font-display text-2xl text-ink">Add a place</h1>
         <p className="mb-6 text-sm text-ink-soft">
@@ -36,7 +31,6 @@ export default async function AddPlacePage() {
         </p>
         <PlaceForm />
       </Container>
-      <Footer />
     </div>
   );
 }
