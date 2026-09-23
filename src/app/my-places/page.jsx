@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import Container from '@/components/layout/Container';
-import PlaceGrid from '@/components/PlaceGrid';
+import MyPlacesGrid from '@/components/MyPlacesGrid';
 import SectionHeader from '@/components/layout/SectionHeader';
 import { getMyStatuses } from '@/lib/placeStatus';
 
@@ -33,7 +33,7 @@ export default async function MyPlacesPage() {
         title="Places you added"
         className="mb-6"
       />
-      <PlaceGrid places={serialized} myStatuses={myStatuses} isLoggedIn />
+      <MyPlacesGrid places={serialized} myStatuses={myStatuses} />
     </Container>
   );
 }
