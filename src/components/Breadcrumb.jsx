@@ -14,9 +14,14 @@ export default function Breadcrumb({ district, title }) {
       {district ? (
         <>
           <ChevronRight className="h-3 w-3 shrink-0" />
-          <span className={`shrink-0 ${isBengali(district) ? 'font-bn' : ''}`}>
+          <Link
+            href={`/?district=${encodeURIComponent(district)}`}
+            className={`shrink-0 transition hover:text-ink ${
+              isBengali(district) ? 'font-bn' : ''
+            }`}
+          >
             {district}
-          </span>
+          </Link>
         </>
       ) : null}
       <ChevronRight className="h-3 w-3 shrink-0" />

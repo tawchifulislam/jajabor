@@ -44,12 +44,12 @@ export const metadata = {
   metadataBase: new URL(siteUrl),
   title: 'Jajabor',
   description:
-    'A personal log of places to visit — photos, routes, and travel notes.',
+    'A personal log of places to visit - photos, routes, and travel notes.',
   icons: { icon: '/favicon.ico' },
   openGraph: {
     title: 'Jajabor',
     description:
-      'A personal log of places to visit — photos, routes, and travel notes.',
+      'A personal log of places to visit - photos, routes, and travel notes.',
     url: siteUrl,
     siteName: 'Jajabor',
     type: 'website',
