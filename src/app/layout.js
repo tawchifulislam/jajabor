@@ -45,7 +45,11 @@ export const metadata = {
   title: 'Jajabor',
   description:
     'A personal log of places to visit - photos, routes, and travel notes.',
-  icons: { icon: '/favicon.ico' },
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'Jajabor',
     description:
