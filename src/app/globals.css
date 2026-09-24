@@ -3,17 +3,21 @@
 @theme {
   --color-ink: #0f1720;
   --color-ink-soft: #46535f;
+  --color-ink-faint: #94a0aa;
   --color-surface: #fbfaf7;
+  --color-surface-alt: #f3f0ea;
   --color-card: #ffffff;
   --color-line: #e6e2da;
+  --color-line-strong: #d3cdc0;
   --color-brand: #0f766e;
   --color-brand-dark: #0b5b54;
   --color-brand-soft: #ccfbf1;
   --color-accent: #d97706;
   --color-stamp: #9a3324;
-  --color-surface-alt: #f3f0ea;
-  --color-line-strong: #d3cdc0;
-  --color-ink-faint: #94a0aa;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fef2f2;
+  --color-success: #059669;
+  --color-success-soft: #ecfdf5;
 
   --font-display: var(--font-playfair), Georgia, serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
@@ -21,6 +25,48 @@
   --font-bn: var(--font-hind-siliguri), 'Noto Sans Bengali', sans-serif;
 
   --radius-card: 1rem;
+}
+
+[data-theme='dark'] {
+  --color-ink: #f1efe8;
+  --color-ink-soft: #b7c0c7;
+  --color-ink-faint: #6b7680;
+  --color-surface: #10201c;
+  --color-surface-alt: #16281f;
+  --color-card: #182a24;
+  --color-line: #2a3b34;
+  --color-line-strong: #3a4d45;
+  --color-brand: #5dcaa5;
+  --color-brand-dark: #7fd9bb;
+  --color-brand-soft: #163a30;
+  --color-accent: #f0a94e;
+  --color-stamp: #e2967c;
+  --color-danger: #f87171;
+  --color-danger-soft: #3a1a1a;
+  --color-success: #34d399;
+  --color-success-soft: #102a20;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-ink: #f1efe8;
+    --color-ink-soft: #b7c0c7;
+    --color-ink-faint: #6b7680;
+    --color-surface: #10201c;
+    --color-surface-alt: #16281f;
+    --color-card: #182a24;
+    --color-line: #2a3b34;
+    --color-line-strong: #3a4d45;
+    --color-brand: #5dcaa5;
+    --color-brand-dark: #7fd9bb;
+    --color-brand-soft: #163a30;
+    --color-accent: #f0a94e;
+    --color-stamp: #e2967c;
+    --color-danger: #f87171;
+    --color-danger-soft: #3a1a1a;
+    --color-success: #34d399;
+    --color-success-soft: #102a20;
+  }
 }
 
 * {
@@ -36,6 +82,9 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 ::selection {
@@ -86,6 +135,7 @@ body {
   stroke-dasharray: 240;
   animation: draw-route 1.8s ease-out 0.6s forwards;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .route-line path {
     animation: none;

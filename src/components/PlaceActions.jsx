@@ -45,7 +45,7 @@ export default function PlaceActions({ placeId, slug, canEdit, canDelete }) {
         {canDelete ? (
           <button
             onClick={() => setConfirmOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-full border border-red-200 px-4 py-2 text-sm text-red-600 transition hover:bg-red-50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger transition hover:bg-danger-soft"
           >
             <Trash2 className="h-4 w-4" />
             Delete

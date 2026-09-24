@@ -49,7 +49,7 @@ export default function ConfirmDialog({
                 disabled={loading}
                 className={`rounded-full px-4 py-2 text-sm font-medium text-white transition disabled:opacity-50 ${
                   danger
-                    ? 'bg-red-600 hover:bg-red-700'
+                    ? 'bg-danger hover:opacity-90'
                     : 'bg-brand hover:bg-brand-dark'
                 }`}
               >

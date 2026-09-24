@@ -62,6 +62,15 @@ export const metadata = {
 
 export const viewport = { themeColor: '#0f766e' };
 
+const THEME_INIT_SCRIPT = `
+  try {
+    var t = localStorage.getItem('jajabor-theme');
+    if (t === 'dark' || t === 'light') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  } catch (e) {}
+`;
+
 export default async function RootLayout({ children }) {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user || null;
@@ -69,8 +78,12 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang="bn"
+      suppressHydrationWarning
       className={`${inter.variable} ${playfair.variable} ${tiroBangla.variable} ${hindSiliguri.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
         <ToastProvider>
           <SessionProvider user={user}>

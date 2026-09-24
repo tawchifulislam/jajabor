@@ -5,6 +5,7 @@ import { Plus, LogIn } from 'lucide-react';
 import { signIn } from '@/lib/auth-client';
 import { useAppSession } from './SessionProvider';
 import ProfileMenu from './ProfileMenu';
+import ThemeToggle from './ThemeToggle';
 import JajaborMark from './JajaborMark';
 import Container from './layout/Container';
 
@@ -22,6 +23,7 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
           {user ? (
             <>
               <Link

@@ -12,7 +12,7 @@ import { useToast } from './ToastProvider';
 const inputClass =
   'w-full rounded-lg border border-line bg-card px-3 py-2 text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10';
 const inputErrorClass =
-  'w-full rounded-lg border border-red-300 bg-card px-3 py-2 text-ink outline-none transition focus:border-red-400 focus:ring-4 focus:ring-red-100';
+  'w-full rounded-lg border border-danger/50 bg-card px-3 py-2 text-ink outline-none transition focus:border-danger focus:ring-4 focus:ring-danger/10';
 
 function Required() {
   return <span className="text-red-500">*</span>;
@@ -20,7 +20,7 @@ function Required() {
 
 function FieldError({ message }) {
   if (!message) return null;
-  return <p className="mt-1 text-xs text-red-600">{message}</p>;
+  return <p className="mt-1 text-xs text-danger">{message}</p>;
 }
 
 export default function PlaceForm({ initialData = null, placeId = null }) {
@@ -260,7 +260,7 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
       </FormSection>
 
       {formError ? (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-lg border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger">
           {formError}
         </div>
       ) : null}

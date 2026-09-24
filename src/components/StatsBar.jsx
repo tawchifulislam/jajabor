@@ -46,8 +46,8 @@ export default function StatsBar({ places, visitedCount }) {
           <div className="h-4 w-px shrink-0 bg-line" />
           <StatChip
             icon={CheckCircle2}
-            iconBg="bg-emerald-50"
-            iconColor="text-emerald-600"
+            iconBg="bg-success-soft"
+            iconColor="text-success"
             value={visitedCount}
             label="visited by you"
           />

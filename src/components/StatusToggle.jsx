@@ -54,7 +54,7 @@ export default function StatusToggle({
       disabled={loading}
       className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 font-bn text-xs font-medium transition hover:opacity-80 ${
         isVisited
-          ? 'bg-emerald-50 text-emerald-700'
+          ? 'bg-success-soft text-success'
           : 'bg-brand-soft text-brand-dark'
       }`}
     >

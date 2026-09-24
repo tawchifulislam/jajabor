@@ -31,12 +31,12 @@ export default function ToastProvider({ children }) {
             key={toast.id}
             className={`pointer-events-auto flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm shadow-lg ${
               toast.type === 'error'
-                ? 'border-red-200 bg-red-50 text-red-700'
+                ? 'border-danger/30 bg-danger-soft text-danger'
                 : 'border-line bg-card text-ink'
             }`}
           >
             {toast.type === 'error' ? (
-              <XCircle className="h-4 w-4 shrink-0 text-red-600" />
+              <XCircle className="h-4 w-4 shrink-0 text-danger" />
             ) : (
               <CheckCircle2 className="h-4 w-4 shrink-0 text-brand" />
             )}
