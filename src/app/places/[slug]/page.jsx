@@ -80,92 +80,98 @@ export default async function PlaceDetailPage({ params }) {
   const admin = isAdmin(session);
   const editAllowed = canEditPlace(place, session);
   const isLoggedIn = Boolean(session?.user);
-  const myStatus = isLoggedIn
-    ? (await getMyStatuses(session.user.id, [place._id]))[place._id]
-    : undefined;
-  const visitedCount = (await getVisitedCounts([place._id]))[place._id] || 0;
+  const [myStatusMap, visitedCountMap] = await Promise.all([
+    isLoggedIn
+      ? getMyStatuses(session.user.id, [place._id])
+      : Promise.resolve({}),
+    getVisitedCounts([place._id]),
+  ]);
+  const myStatus = myStatusMap[place._id];
+  const visitedCount = visitedCountMap[place._id] || 0;
 
   return (
     <>
-    <PlaceJsonLd place={place} />
-    <Container as="main" size="narrow" className="flex-1 py-10">
-      <Breadcrumb district={place.district} title={place.title} />
+      <PlaceJsonLd place={place} />
+      <Container as="main" size="narrow" className="flex-1 py-10">
+        <Breadcrumb district={place.district} title={place.title} />
 
-      <div className="relative mb-3 h-64 w-full overflow-hidden rounded-card sm:h-72">
-        <Image
-          src={cloudinaryUrl(place.coverImage, 1200)}
-          alt={place.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 768px"
-          className="object-cover"
-          priority
-        />
-      </div>
+        <div className="relative mb-3 h-64 w-full overflow-hidden rounded-card sm:h-72">
+          <Image
+            src={cloudinaryUrl(place.coverImage, 1200)}
+            alt={place.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="object-cover"
+            priority
+          />
+        </div>
 
-      {place.gallery?.length ? (
-        <GalleryLightbox images={place.gallery} alt={place.title} />
-      ) : null}
+        {place.gallery?.length ? (
+          <GalleryLightbox images={place.gallery} alt={place.title} />
+        ) : null}
 
-      <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
-        <div>
-          <h1
-            className={`text-2xl text-ink sm:text-3xl ${
-              isBengali(place.title) ? 'font-bn font-semibold' : 'font-display'
-            }`}
-          >
-            {place.title}
-          </h1>
-          <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
-            <p
-              className={`flex items-center gap-1.5 text-ink-soft ${
-                isBengali(displayLocation(place)) ? 'font-bn' : ''
+        <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
+          <div>
+            <h1
+              className={`text-2xl text-ink sm:text-3xl ${
+                isBengali(place.title)
+                  ? 'font-bn font-semibold'
+                  : 'font-display'
               }`}
             >
-              <MapPin className="h-4 w-4 shrink-0" />
-              {displayLocation(place)}
-            </p>
-            <StatusToggle
-              placeId={place._id}
-              status={myStatus}
-              editable={isLoggedIn}
-            />
+              {place.title}
+            </h1>
+            <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
+              <p
+                className={`flex items-center gap-1.5 text-ink-soft ${
+                  isBengali(displayLocation(place)) ? 'font-bn' : ''
+                }`}
+              >
+                <MapPin className="h-4 w-4 shrink-0" />
+                {displayLocation(place)}
+              </p>
+              <StatusToggle
+                placeId={place._id}
+                status={myStatus}
+                editable={isLoggedIn}
+              />
+            </div>
           </div>
+          <PlaceActions
+            placeId={place._id}
+            slug={place.slug}
+            canEdit={editAllowed}
+            canDelete={admin}
+          />
         </div>
-        <PlaceActions
-          placeId={place._id}
-          slug={place.slug}
-          canEdit={editAllowed}
-          canDelete={admin}
+
+        <QuickFacts
+          category={place.category}
+          bestTime={place.bestTime}
+          photoCount={place.gallery?.length || 0}
+          visitedCount={visitedCount}
         />
-      </div>
 
-      <QuickFacts
-        category={place.category}
-        bestTime={place.bestTime}
-        photoCount={place.gallery?.length || 0}
-        visitedCount={visitedCount}
-      />
+        <AddedByCredit name={place.addedBy?.name} />
 
-      <AddedByCredit name={place.addedBy?.name} />
+        {place.notes ? (
+          <section className="mb-6">
+            <h2 className="mb-2 font-display text-lg text-ink">Notes</h2>
+            <p
+              className={`whitespace-pre-line text-ink-soft ${
+                isBengali(place.notes) ? 'font-bn' : ''
+              }`}
+            >
+              {place.notes}
+            </p>
+          </section>
+        ) : null}
 
-      {place.notes ? (
-        <section className="mb-6">
-          <h2 className="mb-2 font-display text-lg text-ink">Notes</h2>
-          <p
-            className={`whitespace-pre-line text-ink-soft ${
-              isBengali(place.notes) ? 'font-bn' : ''
-            }`}
-          >
-            {place.notes}
-          </p>
-        </section>
-      ) : null}
-
-      <PlanningSection
-        howToGetThere={place.howToGetThere}
-        estimatedCost={place.estimatedCost}
-      />
-    </Container>
+        <PlanningSection
+          howToGetThere={place.howToGetThere}
+          estimatedCost={place.estimatedCost}
+        />
+      </Container>
     </>
   );
 }
