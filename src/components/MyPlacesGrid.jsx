@@ -15,12 +15,15 @@ export default function MyPlacesGrid({ places, myStatuses }) {
       <PlaceGrid places={visible} myStatuses={myStatuses} isLoggedIn />
 
       {hasMore ? (
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <p className="text-xs text-ink-faint">
+            Showing {visible.length} of {places.length}
+          </p>
           <button
             onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
             className="rounded-full border border-line px-6 py-2.5 text-sm font-medium text-ink transition hover:bg-card"
           >
-            Load more ({places.length - visibleCount} more)
+            Load more
           </button>
         </div>
       ) : null}
