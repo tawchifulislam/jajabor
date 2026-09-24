@@ -27,7 +27,7 @@ export default function EmptyState() {
           onClick={() =>
             signIn.social({ provider: 'google', callbackURL: '/add' })
           }
-          className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-action px-5 py-2.5 text-sm font-medium text-white transition hover:brightness-110"
         >
           <LogIn className="h-4 w-4" />
           Sign in with Google

@@ -9,7 +9,7 @@ export default function DistrictFilter({ districts, selected, onSelect }) {
         onClick={() => onSelect(null)}
         className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
           !selected
-            ? 'border-brand bg-brand text-white'
+            ? 'border-action bg-action text-white'
             : 'border-line text-ink-soft hover:bg-card'
         }`}
       >

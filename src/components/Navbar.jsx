@@ -28,7 +28,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/add"
-                className="hidden items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-dark sm:inline-flex"
+                className="hidden items-center gap-1.5 rounded-full bg-action px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 sm:inline-flex"
               >
                 <Plus className="h-4 w-4" />
                 Add place

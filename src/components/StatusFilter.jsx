@@ -15,7 +15,7 @@ export default function StatusFilter({ selected, onSelect }) {
           onClick={() => onSelect(opt.value)}
           className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
             selected === opt.value
-              ? 'border-brand bg-brand text-white'
+              ? 'border-action bg-action text-white'
               : 'border-line text-ink-soft hover:bg-card'
           } ${opt.value ? 'font-bn' : ''}`}
         >

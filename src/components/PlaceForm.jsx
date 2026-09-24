@@ -319,7 +319,7 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-brand px-6 py-2.5 text-sm font-medium text-white transition hover:bg-brand-dark disabled:opacity-50"
+          className="rounded-full bg-action px-6 py-2.5 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
         >
           {submitting ? 'Saving...' : isEdit ? 'Save changes' : 'Add place'}
         </button>
