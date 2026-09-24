@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { SearchX } from 'lucide-react';
 import SearchBar from './SearchBar';
 import PlaceGrid from './PlaceGrid';
 import StatsBar from './StatsBar';
@@ -10,7 +11,6 @@ import StatusFilter from './StatusFilter';
 import SectionHeader from './layout/SectionHeader';
 import AddInviteNote from './AddInviteNote';
 import ListGuidelineNote from './ListGuidelineNote';
-import { SearchX } from 'lucide-react';
 
 const PAGE_SIZE = 15;
 
@@ -98,7 +98,7 @@ export default function PlaceExplorer({
   return (
     <>
       <SectionHeader
-        eyebrow="The Collection"
+        eyebrow="The collection"
         title="Places I want to go"
         action={<StatsBar places={places} visitedCount={visitedCount} />}
         className="mb-4"
@@ -126,12 +126,21 @@ export default function PlaceExplorer({
       ) : null}
 
       {filtered.length === 0 && hasActiveFilter ? (
-        <div className="flex flex-col items-center justify-center gap-2 rounded-card border border-dashed border-line py-16 text-center">
-          <SearchX className="h-8 w-8 text-ink-soft" strokeWidth={1.5} />
-          <p className="text-ink">No places match your filters</p>
+        <div className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-line px-6 py-16 text-center">
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-alt">
+            <SearchX className="h-6 w-6 text-ink-soft" strokeWidth={1.5} />
+          </span>
+          <div>
+            <p className="font-display text-lg text-ink">
+              No places match your filters
+            </p>
+            <p className="mt-1 text-sm text-ink-soft">
+              Try a different search term, or clear your filters.
+            </p>
+          </div>
           <button
             onClick={clearFilters}
-            className="text-sm text-brand underline underline-offset-2"
+            className="mt-1 rounded-full border border-line px-5 py-2 text-sm font-medium text-ink transition hover:bg-card"
           >
             Clear filters
           </button>
@@ -142,8 +151,8 @@ export default function PlaceExplorer({
             places={visiblePlaces}
             myStatuses={statuses}
             isLoggedIn={isLoggedIn}
-            visitedCounts={visitedCounts}
             onStatusChange={handleStatusChange}
+            visitedCounts={visitedCounts}
           />
 
           {hasMore ? (

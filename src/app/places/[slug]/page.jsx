@@ -19,6 +19,29 @@ import { getMyStatuses, getVisitedCounts } from '@/lib/placeStatus';
 import { headers } from 'next/headers';
 import AddedByCredit from '@/components/AddedByCredit';
 
+function PlaceJsonLd({ place }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'TouristAttraction',
+    name: place.title,
+    image: cloudinaryUrl(place.coverImage, 1200),
+    description: place.notes || place.howToGetThere || place.title,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: place.area || undefined,
+      addressRegion: place.district || undefined,
+      addressCountry: 'BD',
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 async function getPlace(slug) {
   const db = await getDb();
   const place = await db.collection('places').findOne({ slug });
@@ -63,6 +86,8 @@ export default async function PlaceDetailPage({ params }) {
   const visitedCount = (await getVisitedCounts([place._id]))[place._id] || 0;
 
   return (
+    <>
+    <PlaceJsonLd place={place} />
     <Container as="main" size="narrow" className="flex-1 py-10">
       <Breadcrumb district={place.district} title={place.title} />
 
@@ -141,5 +166,6 @@ export default async function PlaceDetailPage({ params }) {
         estimatedCost={place.estimatedCost}
       />
     </Container>
+    </>
   );
 }

@@ -5,7 +5,7 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/add', '/places/*/edit'],
+      disallow: ['/add', '/places/*/edit', '/my-places'],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
   };
