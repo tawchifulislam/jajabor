@@ -15,8 +15,9 @@ import { canEditPlace } from '@/lib/canEditPlace';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
 import { displayLocation } from '@/lib/placeDisplay';
-import { getMyStatuses } from '@/lib/placeStatus';
+import { getMyStatuses, getVisitedCounts } from '@/lib/placeStatus';
 import { headers } from 'next/headers';
+import AddedByCredit from '@/components/AddedByCredit';
 
 async function getPlace(slug) {
   const db = await getDb();
@@ -59,6 +60,7 @@ export default async function PlaceDetailPage({ params }) {
   const myStatus = isLoggedIn
     ? (await getMyStatuses(session.user.id, [place._id]))[place._id]
     : undefined;
+  const visitedCount = (await getVisitedCounts([place._id]))[place._id] || 0;
 
   return (
     <Container as="main" size="narrow" className="flex-1 py-10">
@@ -116,7 +118,10 @@ export default async function PlaceDetailPage({ params }) {
         category={place.category}
         bestTime={place.bestTime}
         photoCount={place.gallery?.length || 0}
+        visitedCount={visitedCount}
       />
+
+      <AddedByCredit name={place.addedBy?.name} />
 
       {place.notes ? (
         <section className="mb-6">

@@ -1,8 +1,13 @@
-import { CalendarDays, Images } from 'lucide-react';
+import { CalendarDays, Images, Users } from 'lucide-react';
 import { isBengali } from '@/lib/isBengali';
 import { getCategory } from '@/lib/categories';
 
-export default function QuickFacts({ category, bestTime, photoCount }) {
+export default function QuickFacts({
+  category,
+  bestTime,
+  photoCount,
+  visitedCount,
+}) {
   const items = [];
   const cat = getCategory(category);
 
@@ -23,6 +28,14 @@ export default function QuickFacts({ category, bestTime, photoCount }) {
       icon: Images,
       content: `${photoCount} photo${photoCount === 1 ? '' : 's'}`,
       bengali: false,
+    });
+  }
+
+  if (visitedCount > 0) {
+    items.push({
+      icon: Users,
+      content: `${visitedCount} জন ঘুরে এসেছেন`,
+      bengali: true,
     });
   }
 

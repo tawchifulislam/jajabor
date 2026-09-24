@@ -6,6 +6,7 @@ export default function PlaceGrid({
   myStatuses = {},
   isLoggedIn = false,
   onStatusChange,
+  visitedCounts = {},
 }) {
   if (!places?.length) {
     return (
@@ -29,6 +30,7 @@ export default function PlaceGrid({
               status={myStatuses[place._id]}
               editable={isLoggedIn}
               onStatusChange={onStatusChange}
+              visitedCount={visitedCounts[place._id]}
             />
           </div>
         ))}
@@ -46,6 +48,7 @@ export default function PlaceGrid({
           status={myStatuses[place._id]}
           editable={isLoggedIn}
           onStatusChange={onStatusChange}
+          visitedCount={visitedCounts[place._id]}
         />
       ))}
     </div>

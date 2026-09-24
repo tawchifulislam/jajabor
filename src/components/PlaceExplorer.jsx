@@ -18,6 +18,7 @@ export default function PlaceExplorer({
   places,
   myStatuses = {},
   isLoggedIn = false,
+  visitedCounts = {},
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -141,6 +142,7 @@ export default function PlaceExplorer({
             places={visiblePlaces}
             myStatuses={statuses}
             isLoggedIn={isLoggedIn}
+            visitedCounts={visitedCounts}
             onStatusChange={handleStatusChange}
           />
 

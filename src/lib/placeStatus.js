@@ -15,3 +15,26 @@ export async function getMyStatuses(userId, placeIds) {
   }
   return map;
 }
+
+export async function getVisitedCounts(placeIds) {
+  if (!placeIds.length) return {};
+  const db = await getDb();
+  const results = await db
+    .collection('placeStatuses')
+    .aggregate([
+      {
+        $match: {
+          placeId: { $in: placeIds.map(id => new ObjectId(id)) },
+          status: 'visited',
+        },
+      },
+      { $group: { _id: '$placeId', count: { $sum: 1 } } },
+    ])
+    .toArray();
+
+  const map = {};
+  for (const r of results) {
+    map[r._id.toString()] = r.count;
+  }
+  return map;
+}

@@ -7,7 +7,9 @@ import { Images, MapPin } from 'lucide-react';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
 import { displayLocation } from '@/lib/placeDisplay';
+import { isNew } from '@/lib/isNew';
 import StatusToggle from './StatusToggle';
+import VisitedCount from './VisitedCount';
 
 export default function PlaceCard({
   place,
@@ -15,11 +17,13 @@ export default function PlaceCard({
   status,
   editable = false,
   onStatusChange,
+  visitedCount = 0,
 }) {
   const location = displayLocation(place);
   const bengaliTitle = isBengali(place.title);
   const bengaliLocation = isBengali(location);
   const href = `/places/${place.slug}`;
+  const showNew = isNew(place.createdAt);
 
   return (
     <motion.div
@@ -34,7 +38,7 @@ export default function PlaceCard({
       <div className="group overflow-hidden rounded-card border border-line bg-card transition-all duration-200 hover:border-line-strong hover:shadow-[0_10px_28px_-10px_rgba(15,23,32,0.18)]">
         <Link
           href={href}
-          className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          className="relative block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
           <div className="relative h-44 w-full overflow-hidden">
             <Image
@@ -45,6 +49,11 @@ export default function PlaceCard({
               className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
             />
           </div>
+          {showNew ? (
+            <span className="absolute left-2 top-2 rounded-full bg-accent px-2 py-0.5 font-bn text-[10px] font-medium text-white shadow-sm">
+              নতুন
+            </span>
+          ) : null}
         </Link>
 
         <div className="p-4">
@@ -84,11 +93,18 @@ export default function PlaceCard({
             ) : null}
           </Link>
 
-          {place.gallery?.length ? (
-            <div className="mt-3 flex items-center gap-1 border-t border-line pt-3 text-xs text-ink-faint">
-              <Images className="h-3.5 w-3.5" />
-              {place.gallery.length} photo
-              {place.gallery.length === 1 ? '' : 's'}
+          {place.gallery?.length || visitedCount > 0 ? (
+            <div className="mt-3 flex items-center justify-between border-t border-line pt-3">
+              {place.gallery?.length ? (
+                <span className="flex items-center gap-1 text-xs text-ink-faint">
+                  <Images className="h-3.5 w-3.5" />
+                  {place.gallery.length} photo
+                  {place.gallery.length === 1 ? '' : 's'}
+                </span>
+              ) : (
+                <span />
+              )}
+              <VisitedCount count={visitedCount} />
             </div>
           ) : null}
         </div>
