@@ -5,7 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import Container from '@/components/layout/Container';
 import MyPlacesGrid from '@/components/MyPlacesGrid';
 import SectionHeader from '@/components/layout/SectionHeader';
-import { getMyStatuses } from '@/lib/placeStatus';
+import { getMyStatuses, getVisitedCounts } from '@/lib/placeStatus';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,10 +21,9 @@ export default async function MyPlacesPage() {
     .toArray();
 
   const serialized = JSON.parse(JSON.stringify(places));
-  const myStatuses = await getMyStatuses(
-    session.user.id,
-    serialized.map(p => p._id),
-  );
+  const placeIds = serialized.map(p => p._id);
+  const myStatuses = await getMyStatuses(session.user.id, placeIds);
+  const visitedCounts = await getVisitedCounts(placeIds);
 
   return (
     <Container as="main" className="flex-1 py-10">
@@ -33,7 +32,11 @@ export default async function MyPlacesPage() {
         title="Places you added"
         className="mb-6"
       />
-      <MyPlacesGrid places={serialized} myStatuses={myStatuses} />
+      <MyPlacesGrid
+        places={serialized}
+        myStatuses={myStatuses}
+        visitedCounts={visitedCounts}
+      />
     </Container>
   );
 }
