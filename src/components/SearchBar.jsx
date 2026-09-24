@@ -4,20 +4,21 @@ import { Search, X } from 'lucide-react';
 
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className="relative w-full sm:max-w-xs" suppressHydrationWarning>
+    <div className="relative w-full sm:max-w-xs">
       <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" />
       <input
         type="text"
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder="Search places or districts..."
-        className="w-full rounded-full border border-line bg-card py-2.5 pl-10 pr-9 text-sm text-ink outline-none transition focus:border-brand"
+        aria-label="Search places or districts"
+        className="w-full rounded-full border border-line bg-card py-2.5 pl-10 pr-9 text-sm text-ink outline-none transition focus:border-brand focus-visible:ring-2 focus-visible:ring-brand"
       />
       {value ? (
         <button
           onClick={() => onChange('')}
           aria-label="Clear search"
-          className="absolute right-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-ink-soft transition hover:bg-line"
+          className="absolute right-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-ink-soft transition hover:bg-line focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
         >
           <X className="h-3.5 w-3.5" />
         </button>

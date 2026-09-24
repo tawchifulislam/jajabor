@@ -15,12 +15,16 @@ const inputErrorClass =
   'w-full rounded-lg border border-danger/50 bg-card px-3 py-2 text-ink outline-none transition focus:border-danger focus:ring-4 focus:ring-danger/10';
 
 function Required() {
-  return <span className="text-red-500">*</span>;
+  return <span className="text-danger">*</span>;
 }
 
-function FieldError({ message }) {
+function FieldError({ id, message }) {
   if (!message) return null;
-  return <p className="mt-1 text-xs text-danger">{message}</p>;
+  return (
+    <p id={id} className="mt-1 text-xs text-danger-text">
+      {message}
+    </p>
+  );
 }
 
 export default function PlaceForm({ initialData = null, placeId = null }) {
@@ -105,26 +109,40 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
 
       <FormSection title="Place details">
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink">
+          <label
+            htmlFor="title"
+            className="mb-1 block text-sm font-medium text-ink"
+          >
             Title <Required />
           </label>
           <input
+            id="title"
             value={form.title}
             onChange={e => update('title', e.target.value)}
             placeholder="Name of the place"
+            aria-invalid={Boolean(fieldErrors.title)}
+            aria-describedby={fieldErrors.title ? 'title-error' : undefined}
             className={fieldErrors.title ? inputErrorClass : inputClass}
           />
-          <FieldError message={fieldErrors.title} />
+          <FieldError id="title-error" message={fieldErrors.title} />
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink">
+            <label
+              htmlFor="district"
+              className="mb-1 block text-sm font-medium text-ink"
+            >
               District <Required />
             </label>
             <select
+              id="district"
               value={form.district}
               onChange={e => update('district', e.target.value)}
+              aria-invalid={Boolean(fieldErrors.district)}
+              aria-describedby={
+                fieldErrors.district ? 'district-error' : undefined
+              }
               className={fieldErrors.district ? inputErrorClass : inputClass}
             >
               <option value="">Select a district</option>
@@ -140,28 +158,38 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
                 ),
               )}
             </select>
-            <FieldError message={fieldErrors.district} />
+            <FieldError id="district-error" message={fieldErrors.district} />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink">
+            <label
+              htmlFor="area"
+              className="mb-1 block text-sm font-medium text-ink"
+            >
               Area <Required />
             </label>
             <input
+              id="area"
               value={form.area}
               onChange={e => update('area', e.target.value)}
               placeholder="Upazila, thana, or specific spot"
+              aria-invalid={Boolean(fieldErrors.area)}
+              aria-describedby={fieldErrors.area ? 'area-error' : undefined}
               className={fieldErrors.area ? inputErrorClass : inputClass}
             />
-            <FieldError message={fieldErrors.area} />
+            <FieldError id="area-error" message={fieldErrors.area} />
           </div>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink">
+          <label
+            htmlFor="category"
+            className="mb-1 block text-sm font-medium text-ink"
+          >
             Category <span className="text-ink-faint">(optional)</span>
           </label>
           <select
+            id="category"
             value={form.category}
             onChange={e => update('category', e.target.value)}
             className={inputClass}
@@ -182,9 +210,9 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
       >
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink">
+            <span className="mb-1 block text-sm font-medium text-ink">
               Cover image <Required />
-            </label>
+            </span>
             <ImageUploader
               value={form.coverImage}
               onChange={url => update('coverImage', url)}
@@ -193,9 +221,9 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink">
+            <span className="mb-1 block text-sm font-medium text-ink">
               Gallery <span className="text-ink-faint">(optional)</span>
-            </label>
+            </span>
             <ImageUploader
               value={form.gallery}
               onChange={urls => update('gallery', urls)}
@@ -207,10 +235,14 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
 
       <FormSection title="Getting there">
         <div>
-          <label className="mb-1 block text-sm font-medium text-ink">
+          <label
+            htmlFor="howToGetThere"
+            className="mb-1 block text-sm font-medium text-ink"
+          >
             How to get there
           </label>
           <textarea
+            id="howToGetThere"
             value={form.howToGetThere}
             onChange={e => update('howToGetThere', e.target.value)}
             rows={4}
@@ -221,10 +253,14 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink">
+            <label
+              htmlFor="bestTime"
+              className="mb-1 block text-sm font-medium text-ink"
+            >
               Best time to visit
             </label>
             <input
+              id="bestTime"
               value={form.bestTime}
               onChange={e => update('bestTime', e.target.value)}
               placeholder="Best season or months to visit"
@@ -232,10 +268,14 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-ink">
+            <label
+              htmlFor="estimatedCost"
+              className="mb-1 block text-sm font-medium text-ink"
+            >
               Route details
             </label>
             <textarea
+              id="estimatedCost"
               value={form.estimatedCost}
               onChange={e => update('estimatedCost', e.target.value)}
               rows={3}
@@ -250,7 +290,11 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
         title="Notes"
         description="Optional - anything else worth remembering."
       >
+        <label htmlFor="notes" className="sr-only">
+          Notes
+        </label>
         <textarea
+          id="notes"
           value={form.notes}
           onChange={e => update('notes', e.target.value)}
           rows={3}
@@ -260,7 +304,7 @@ export default function PlaceForm({ initialData = null, placeId = null }) {
       </FormSection>
 
       {formError ? (
-        <div className="rounded-lg border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger">
+        <div className="rounded-lg border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger-text">
           {formError}
         </div>
       ) : null}

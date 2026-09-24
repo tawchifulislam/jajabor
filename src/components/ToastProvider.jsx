@@ -25,13 +25,17 @@ export default function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="pointer-events-none fixed inset-x-0 bottom-5 z-60 flex flex-col items-center gap-2 px-4">
+      <div
+        role="status"
+        aria-live="polite"
+        className="pointer-events-none fixed inset-x-0 bottom-5 z-60 flex flex-col items-center gap-2 px-4"
+      >
         {toasts.map(toast => (
           <div
             key={toast.id}
             className={`pointer-events-auto flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm shadow-lg ${
               toast.type === 'error'
-                ? 'border-danger/30 bg-danger-soft text-danger'
+                ? 'border-danger/30 bg-danger-soft text-danger-text'
                 : 'border-line bg-card text-ink'
             }`}
           >

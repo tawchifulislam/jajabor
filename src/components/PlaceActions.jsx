@@ -36,7 +36,7 @@ export default function PlaceActions({ placeId, slug, canEdit, canDelete }) {
         {canEdit ? (
           <Link
             href={`/places/${slug}/edit`}
-            className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm text-ink transition hover:bg-card"
+            className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger-text transition hover:bg-danger-soft"
           >
             <Pencil className="h-4 w-4" />
             Edit

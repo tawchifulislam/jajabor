@@ -18,6 +18,8 @@
   --color-danger-soft: #fef2f2;
   --color-success: #059669;
   --color-success-soft: #ecfdf5;
+  --color-success-text: #047857;
+  --color-danger-text: #b91c1c;
 
   --font-display: var(--font-playfair), Georgia, serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
@@ -45,6 +47,8 @@
   --color-danger-soft: #3a1a1a;
   --color-success: #34d399;
   --color-success-soft: #102a20;
+  --color-success-text: #6ee7b7;
+  --color-danger-text: #fca5a5;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -42,7 +42,7 @@ export default function GalleryLightbox({ images, alt }) {
           >
             <Image
               src={cloudinaryUrl(url, 200)}
-              alt=""
+              alt={`${alt}  photo ${idx + 1}`}
               fill
               sizes="80px"
               className="object-cover transition duration-300 group-hover:scale-105"
@@ -53,6 +53,9 @@ export default function GalleryLightbox({ images, alt }) {
 
       {activeIndex !== null ? (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={alt}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
           onClick={close}
         >

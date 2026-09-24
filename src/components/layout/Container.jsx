@@ -10,8 +10,11 @@ export default function Container({
     form: 'max-w-2xl',
   };
 
+  const id = Tag === 'main' ? 'main-content' : undefined;
+
   return (
     <Tag
+      id={id}
       className={`mx-auto w-full px-4 sm:px-6 lg:px-8 ${sizes[size]} ${className}`}
     >
       {children}

@@ -19,8 +19,15 @@ export default function ProfileMenu() {
     function handleClick(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
+    function handleKey(e) {
+      if (e.key === 'Escape') setOpen(false);
+    }
     document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
   }, []);
 
   async function handleSignOut() {
@@ -35,7 +42,10 @@ export default function ProfileMenu() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-card transition hover:bg-surface-alt"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label="Open profile menu"
+        className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-card transition hover:bg-surface-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
       >
         {user.image ? (
           <Image
@@ -51,13 +61,17 @@ export default function ProfileMenu() {
       </button>
 
       {open ? (
-        <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-card border border-line bg-card p-2 shadow-lg">
+        <div
+          role="menu"
+          className="absolute right-0 top-full z-50 mt-2 w-56 rounded-card border border-line bg-card p-2 shadow-lg"
+        >
           <p className="truncate px-2 py-1.5 text-xs text-ink-soft">
             {user.email}
           </p>
 
           <Link
             href="/my-places"
+            role="menuitem"
             onClick={() => setOpen(false)}
             className="flex items-center gap-2 rounded-md px-2 py-2 text-sm text-ink transition hover:bg-surface-alt"
           >
@@ -68,6 +82,7 @@ export default function ProfileMenu() {
           <button
             onClick={handleSignOut}
             disabled={signingOut}
+            role="menuitem"
             className="mt-1 flex w-full items-center gap-2 rounded-md border-t border-line px-2 pt-2 text-sm text-ink-soft transition hover:text-ink disabled:opacity-50"
           >
             {signingOut ? (
