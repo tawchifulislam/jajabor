@@ -12,7 +12,7 @@ import AddInviteNote from './AddInviteNote';
 import ListGuidelineNote from './ListGuidelineNote';
 import { SearchX } from 'lucide-react';
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 15;
 
 export default function PlaceExplorer({
   places,
