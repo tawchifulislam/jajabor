@@ -1,7 +1,9 @@
-import { Navigation2 } from "lucide-react";
+import { Navigation2 } from 'lucide-react';
 
 function toQuery(place) {
-  return encodeURIComponent([place.title, place.area].filter(Boolean).join(", "));
+  return encodeURIComponent(
+    [place.title, place.area].filter(Boolean).join(', '),
+  );
 }
 
 export default function TripDirectionsButton({ places }) {
@@ -13,9 +15,9 @@ export default function TripDirectionsButton({ places }) {
   } else {
     const origin = toQuery(places[0]);
     const destination = toQuery(places[places.length - 1]);
-    const waypoints = places.slice(1, -1).map(toQuery).join("|");
+    const waypoints = places.slice(1, -1).map(toQuery).join('|');
     url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${
-      waypoints ? `&waypoints=${waypoints}` : ""
+      waypoints ? `&waypoints=${waypoints}` : ''
     }`;
   }
 
@@ -24,7 +26,7 @@ export default function TripDirectionsButton({ places }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 rounded-full bg-action px-4 py-2 text-sm font-medium text-white transition hover:brightness-110"
+      className="inline-flex items-center gap-1.5 rounded-full bg-action px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
       <Navigation2 className="h-4 w-4" />
       Get directions

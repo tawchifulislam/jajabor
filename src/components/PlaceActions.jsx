@@ -36,7 +36,7 @@ export default function PlaceActions({ placeId, slug, canEdit, canDelete }) {
         {canEdit ? (
           <Link
             href={`/places/${slug}/edit`}
-            className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger-text transition hover:bg-danger-soft"
+            className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm text-ink transition hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             <Pencil className="h-4 w-4" />
             Edit
@@ -45,7 +45,7 @@ export default function PlaceActions({ placeId, slug, canEdit, canDelete }) {
         {canDelete ? (
           <button
             onClick={() => setConfirmOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger transition hover:bg-danger-soft"
+            className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger-text transition hover:bg-danger-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             <Trash2 className="h-4 w-4" />
             Delete
