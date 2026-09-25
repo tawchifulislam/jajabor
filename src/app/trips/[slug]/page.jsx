@@ -78,7 +78,7 @@ export default async function TripPage({ params }) {
             <li key={place._id}>
               <Link
                 href={`/places/${place.slug}`}
-                className="flex items-center gap-3 rounded-card border border-line bg-card p-3 transition hover:border-line-strong hover:shadow-[0_6px_20px_-8px_rgba(15,23,32,0.15)]"
+                className="flex items-center gap-3 rounded-card border border-line bg-card p-3 transition hover:border-line-strong hover:shadow-[0_6px_20px_-8px_rgba(15,23,32,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-soft text-sm font-semibold text-brand">
                   {index + 1}

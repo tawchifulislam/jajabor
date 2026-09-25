@@ -126,7 +126,7 @@ export default function TripBuilder({ places }) {
               return (
                 <li
                   key={id}
-                  className="flex items-center gap-3 rounded-lg border border-line bg-card p-2"
+                  className="flex items-center gap-2 rounded-lg border border-line bg-card p-2"
                 >
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xs font-semibold text-brand">
                     {index + 1}
@@ -162,7 +162,7 @@ export default function TripBuilder({ places }) {
                       onClick={() => moveUp(index)}
                       disabled={index === 0}
                       aria-label="Move up"
-                      className="flex h-7 w-7 items-center justify-center rounded-full text-ink-soft transition hover:bg-surface-alt disabled:opacity-30"
+                      className="flex h-7 w-7 items-center justify-center rounded-full text-ink-soft transition hover:bg-surface-alt disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                     >
                       <ChevronUp className="h-4 w-4" />
                     </button>
@@ -171,7 +171,7 @@ export default function TripBuilder({ places }) {
                       onClick={() => moveDown(index)}
                       disabled={index === selectedIds.length - 1}
                       aria-label="Move down"
-                      className="flex h-7 w-7 items-center justify-center rounded-full text-ink-soft transition hover:bg-surface-alt disabled:opacity-30"
+                      className="flex h-7 w-7 items-center justify-center rounded-full text-ink-soft transition hover:bg-surface-alt disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                     >
                       <ChevronDown className="h-4 w-4" />
                     </button>
@@ -179,7 +179,7 @@ export default function TripBuilder({ places }) {
                       type="button"
                       onClick={() => removePlace(id)}
                       aria-label="Remove"
-                      className="flex h-7 w-7 items-center justify-center rounded-full text-danger-text transition hover:bg-danger-soft"
+                      className="flex h-7 w-7 items-center justify-center rounded-full text-danger-text transition hover:bg-danger-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -222,7 +222,7 @@ export default function TripBuilder({ places }) {
                   <button
                     type="button"
                     onClick={() => addPlace(place._id)}
-                    className="flex w-full items-center gap-3 rounded-lg p-1.5 text-left transition hover:bg-surface-alt"
+                    className="flex w-full items-center gap-3 rounded-lg p-1.5 text-left transition hover:bg-surface-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
                     <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md">
                       <Image

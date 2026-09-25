@@ -50,7 +50,7 @@ export default async function MyTripsPage() {
             <li key={trip._id.toString()}>
               <Link
                 href={`/trips/${trip.slug}`}
-                className="flex items-center justify-between gap-4 rounded-card border border-line bg-card p-4 transition hover:border-line-strong"
+                className="flex items-center justify-between gap-4 rounded-card border border-line bg-card p-4 transition hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
                 <div>
                   <p className="font-medium text-ink">{trip.name}</p>
