@@ -6,6 +6,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import Container from '@/components/layout/Container';
 import SectionHeader from '@/components/layout/SectionHeader';
+import { isBengali } from '@/lib/isBengali';
 
 export const dynamic = 'force-dynamic';
 
@@ -53,7 +54,11 @@ export default async function MyTripsPage() {
                 className="flex items-center justify-between gap-4 rounded-card border border-line bg-card p-4 transition hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
                 <div>
-                  <p className="font-medium text-ink">{trip.name}</p>
+                  <p
+                    className={`text-ink ${isBengali(trip.name) ? 'font-bn font-medium' : 'font-medium'}`}
+                  >
+                    {trip.name}
+                  </p>
                   <p className="text-xs text-ink-soft">
                     {trip.placeIds.length} stop
                     {trip.placeIds.length === 1 ? '' : 's'}

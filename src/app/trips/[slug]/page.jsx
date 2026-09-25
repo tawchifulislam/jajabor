@@ -58,7 +58,11 @@ export default async function TripPage({ params }) {
     <Container as="main" size="narrow" className="flex-1 py-10">
       <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-start">
         <div>
-          <h1 className="font-display text-2xl text-ink sm:text-3xl">
+          <h1
+            className={`text-2xl text-ink sm:text-3xl ${
+              isBengali(trip.name) ? 'font-bn font-semibold' : 'font-display'
+            }`}
+          >
             {trip.name}
           </h1>
           <p className="mt-1 text-sm text-ink-soft">

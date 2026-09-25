@@ -111,7 +111,9 @@ export default function TripBuilder({ places }) {
           value={name}
           onChange={e => setName(e.target.value)}
           placeholder="e.g. Sitakunda day trip"
-          className="w-full rounded-lg border border-line bg-card px-3 py-2 text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+          className={`w-full rounded-lg border border-line bg-card px-3 py-2 text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10 ${
+            isBengali(name) ? 'font-bn' : ''
+          }`}
         />
       </div>
 
