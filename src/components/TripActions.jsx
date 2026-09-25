@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { Pencil, Trash2 } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 import { useToast } from './ToastProvider';
 
-export default function TripActions({ tripId }) {
+export default function TripActions({ tripId, slug }) {
   const router = useRouter();
   const { showToast } = useToast();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -28,18 +29,27 @@ export default function TripActions({ tripId }) {
 
   return (
     <>
-      <button
-        onClick={() => setConfirmOpen(true)}
-        className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger-text transition hover:bg-danger-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-      >
-        <Trash2 className="h-4 w-4" />
-        Delete
-      </button>
+      <div className="flex flex-wrap gap-2">
+        <Link
+          href={`/trips/${slug}/edit`}
+          className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm text-ink transition hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        >
+          <Pencil className="h-4 w-4" />
+          Edit
+        </Link>
+        <button
+          onClick={() => setConfirmOpen(true)}
+          className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger-text transition hover:bg-danger-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+        >
+          <Trash2 className="h-4 w-4" />
+          Delete
+        </button>
+      </div>
 
       <ConfirmDialog
         open={confirmOpen}
         title="Delete this trip?"
-        description="This can't be undone - the trip itself will be removed. The places on it stay in the main list."
+        description="This can't be undone — the trip itself will be removed. The places on it stay in the main list."
         confirmLabel="Delete"
         danger
         loading={deleting}

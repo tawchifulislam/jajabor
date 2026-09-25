@@ -9,12 +9,19 @@ import { displayLocation } from '@/lib/placeDisplay';
 import { isBengali } from '@/lib/isBengali';
 import { useToast } from './ToastProvider';
 
-export default function TripBuilder({ places }) {
+export default function TripBuilder({
+  places,
+  initialData = null,
+  tripId = null,
+}) {
   const router = useRouter();
   const { showToast } = useToast();
-  const [name, setName] = useState('');
+  const isEdit = Boolean(tripId);
+  const [name, setName] = useState(initialData?.name || '');
   const [query, setQuery] = useState('');
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedIds, setSelectedIds] = useState(
+    initialData?.placeIds?.map(id => id.toString()) || [],
+  );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -78,8 +85,8 @@ export default function TripBuilder({ places }) {
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/trips', {
-        method: 'POST',
+      const res = await fetch(isEdit ? `/api/trips/${tripId}` : '/api/trips', {
+        method: isEdit ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, placeIds: selectedIds }),
       });
@@ -88,8 +95,9 @@ export default function TripBuilder({ places }) {
         throw new Error(data.error || 'Something went wrong');
       }
       const data = await res.json();
-      showToast('Trip created');
+      showToast(isEdit ? 'Trip updated' : 'Trip created');
       router.push(`/trips/${data.trip.slug}`);
+      router.refresh();
     } catch (err) {
       setError(err.message);
     } finally {
@@ -263,7 +271,7 @@ export default function TripBuilder({ places }) {
         disabled={submitting}
         className="w-full rounded-full bg-action px-6 py-3 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
       >
-        {submitting ? 'Creating...' : 'Create trip'}
+        {submitting ? 'Saving...' : isEdit ? 'Save changes' : 'Create trip'}
       </button>
     </form>
   );

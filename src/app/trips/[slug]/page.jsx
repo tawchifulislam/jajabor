@@ -71,7 +71,9 @@ export default async function TripPage({ params }) {
         </div>
         <div className="flex flex-wrap gap-2">
           <TripDirectionsButton places={trip.places} />
-          {editAllowed ? <TripActions tripId={trip._id} /> : null}
+          {editAllowed ? (
+            <TripActions tripId={trip._id} slug={trip.slug} />
+          ) : null}
         </div>
       </div>
 
