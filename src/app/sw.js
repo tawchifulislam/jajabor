@@ -21,15 +21,23 @@ const serwist = new Serwist({
     },
     {
       matcher: ({ request, url }) =>
-        request.mode === 'navigate' && !url.pathname.startsWith('/api'),
+        url.origin === self.location.origin &&
+        !url.pathname.startsWith('/api') &&
+        (request.mode === 'navigate' || request.headers.get('RSC') === '1'),
       handler: new NetworkFirst({
         cacheName: 'jajabor-pages',
         networkTimeoutSeconds: 3,
         plugins: [
           new ExpirationPlugin({
-            maxEntries: 60,
+            maxEntries: 80,
             maxAgeSeconds: 7 * 24 * 60 * 60,
           }),
+          {
+            cacheKeyWillBeUsed: async ({ request }) => {
+              const isRSC = request.headers.get('RSC') === '1';
+              return isRSC ? `${request.url}::rsc` : request.url;
+            },
+          },
         ],
       }),
     },
