@@ -1,14 +1,21 @@
 import { Navigation, Route as RouteIcon } from 'lucide-react';
 import { isBengali } from '@/lib/isBengali';
+import DirectionsButton from './DirectionsButton';
 
-export default function PlanningSection({ howToGetThere, estimatedCost }) {
+export default function PlanningSection({
+  howToGetThere,
+  estimatedCost,
+  area,
+  district,
+}) {
   if (!howToGetThere && !estimatedCost) return null;
 
   return (
     <section className="mb-6 rounded-card border border-line bg-card p-5">
-      <h2 className="mb-4 font-display text-lg text-ink">
-        Planning your visit
-      </h2>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-display text-lg text-ink">Planning your visit</h2>
+        <DirectionsButton area={area} district={district} />
+      </div>
 
       {howToGetThere ? (
         <div className={estimatedCost ? 'mb-4 border-b border-line pb-4' : ''}>

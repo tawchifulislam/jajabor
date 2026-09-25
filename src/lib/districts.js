@@ -70,3 +70,5 @@ export const DISTRICTS_BY_DIVISION = {
   ],
   'ময়মনসিংহ বিভাগ': ['ময়মনসিংহ', 'জামালপুর', 'শেরপুর', 'নেত্রকোণা'],
 };
+
+export const ALL_DISTRICTS = Object.values(DISTRICTS_BY_DIVISION).flat();
