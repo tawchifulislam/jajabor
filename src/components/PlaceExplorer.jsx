@@ -11,6 +11,7 @@ import StatusFilter from './StatusFilter';
 import SectionHeader from './layout/SectionHeader';
 import AddInviteNote from './AddInviteNote';
 import ListGuidelineNote from './ListGuidelineNote';
+import { ALL_DISTRICTS } from '@/lib/districts';
 
 const PAGE_SIZE = 15;
 
@@ -87,6 +88,14 @@ export default function PlaceExplorer({
     ? places.filter(p => statuses[p._id] === 'visited').length
     : null;
 
+  const districtsVisited = isLoggedIn
+    ? new Set(
+        places
+          .filter(p => statuses[p._id] === 'visited' && p.district)
+          .map(p => p.district),
+      ).size
+    : null;
+
   const hasActiveFilter = Boolean(query || selectedDistrict || selectedStatus);
 
   function clearFilters() {
@@ -100,7 +109,14 @@ export default function PlaceExplorer({
       <SectionHeader
         eyebrow="The collection"
         title="Places I want to go"
-        action={<StatsBar places={places} visitedCount={visitedCount} />}
+        action={
+          <StatsBar
+            places={places}
+            visitedCount={visitedCount}
+            districtsVisited={districtsVisited}
+            totalDistricts={ALL_DISTRICTS.length}
+          />
+        }
         className="mb-4"
       />
 

@@ -1,12 +1,16 @@
 import Image from 'next/image';
+import { ObjectId } from 'mongodb';
 import { notFound } from 'next/navigation';
 import { MapPin } from 'lucide-react';
 import PlaceActions from '@/components/PlaceActions';
+import ShareButton from '@/components/ShareButton';
 import GalleryLightbox from '@/components/GalleryLightbox';
 import QuickFacts from '@/components/QuickFacts';
 import PlanningSection from '@/components/PlanningSection';
+import NearbyPlaces from '@/components/NearbyPlaces';
 import StatusToggle from '@/components/StatusToggle';
 import Breadcrumb from '@/components/Breadcrumb';
+import AddedByCredit from '@/components/AddedByCredit';
 import Container from '@/components/layout/Container';
 import { getDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
@@ -17,7 +21,9 @@ import { isBengali } from '@/lib/isBengali';
 import { displayLocation } from '@/lib/placeDisplay';
 import { getMyStatuses, getVisitedCounts } from '@/lib/placeStatus';
 import { headers } from 'next/headers';
-import AddedByCredit from '@/components/AddedByCredit';
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://jajabor.vercel.app';
 
 function PlaceJsonLd({ place }) {
   const data = {
@@ -46,6 +52,17 @@ async function getPlace(slug) {
   const db = await getDb();
   const place = await db.collection('places').findOne({ slug });
   return place ? JSON.parse(JSON.stringify(place)) : null;
+}
+
+async function getNearbyPlaces(district, excludeId) {
+  if (!district) return [];
+  const db = await getDb();
+  const places = await db
+    .collection('places')
+    .find({ district, _id: { $ne: new ObjectId(excludeId) } })
+    .limit(3)
+    .toArray();
+  return JSON.parse(JSON.stringify(places));
 }
 
 export async function generateMetadata({ params }) {
@@ -80,14 +97,23 @@ export default async function PlaceDetailPage({ params }) {
   const admin = isAdmin(session);
   const editAllowed = canEditPlace(place, session);
   const isLoggedIn = Boolean(session?.user);
-  const [myStatusMap, visitedCountMap] = await Promise.all([
+
+  const nearby = await getNearbyPlaces(place.district, place._id);
+  const nearbyIds = nearby.map(p => p._id);
+
+  const [myStatusMap, visitedCountMap, nearbyStatuses] = await Promise.all([
     isLoggedIn
       ? getMyStatuses(session.user.id, [place._id])
       : Promise.resolve({}),
     getVisitedCounts([place._id]),
+    isLoggedIn && nearbyIds.length
+      ? getMyStatuses(session.user.id, nearbyIds)
+      : Promise.resolve({}),
   ]);
+
   const myStatus = myStatusMap[place._id];
   const visitedCount = visitedCountMap[place._id] || 0;
+  const pageUrl = `${siteUrl}/places/${place.slug}`;
 
   return (
     <>
@@ -137,12 +163,15 @@ export default async function PlaceDetailPage({ params }) {
               />
             </div>
           </div>
-          <PlaceActions
-            placeId={place._id}
-            slug={place.slug}
-            canEdit={editAllowed}
-            canDelete={admin}
-          />
+          <div className="flex flex-wrap gap-2">
+            <ShareButton title={place.title} url={pageUrl} />
+            <PlaceActions
+              placeId={place._id}
+              slug={place.slug}
+              canEdit={editAllowed}
+              canDelete={admin}
+            />
+          </div>
         </div>
 
         <QuickFacts
@@ -152,7 +181,11 @@ export default async function PlaceDetailPage({ params }) {
           visitedCount={visitedCount}
         />
 
-        <AddedByCredit name={place.addedBy?.name} />
+        <AddedByCredit
+          name={place.addedBy?.name}
+          createdAt={place.createdAt}
+          updatedAt={place.updatedAt}
+        />
 
         {place.notes ? (
           <section className="mb-6">
@@ -170,6 +203,14 @@ export default async function PlaceDetailPage({ params }) {
         <PlanningSection
           howToGetThere={place.howToGetThere}
           estimatedCost={place.estimatedCost}
+          area={place.area}
+          district={place.district}
+        />
+
+        <NearbyPlaces
+          places={nearby}
+          district={place.district}
+          myStatuses={nearbyStatuses}
         />
       </Container>
     </>

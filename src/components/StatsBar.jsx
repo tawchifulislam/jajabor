@@ -1,4 +1,4 @@
-import { MapPin, Compass, CheckCircle2 } from 'lucide-react';
+import { MapPin, Compass, CheckCircle2, Flag } from 'lucide-react';
 
 function StatChip({ icon: Icon, iconBg, iconColor, value, label }) {
   return (
@@ -15,7 +15,12 @@ function StatChip({ icon: Icon, iconBg, iconColor, value, label }) {
   );
 }
 
-export default function StatsBar({ places, visitedCount }) {
+export default function StatsBar({
+  places,
+  visitedCount,
+  districtsVisited,
+  totalDistricts,
+}) {
   const totalPlaces = places.length;
   const districts = new Set(places.map(p => p.district).filter(Boolean)).size;
 
@@ -41,6 +46,7 @@ export default function StatsBar({ places, visitedCount }) {
         value={districts}
         label="districts"
       />
+
       {visitedCount !== null && visitedCount !== undefined ? (
         <>
           <div className="h-4 w-px shrink-0 bg-line" />
@@ -51,6 +57,23 @@ export default function StatsBar({ places, visitedCount }) {
             value={visitedCount}
             label="visited by you"
           />
+        </>
+      ) : null}
+
+      {districtsVisited !== null && districtsVisited !== undefined ? (
+        <>
+          <div className="h-4 w-px shrink-0 bg-line" />
+          <div className="flex shrink-0 items-center gap-2">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15">
+              <Flag className="h-3.5 w-3.5 text-accent" />
+            </span>
+            <span className="whitespace-nowrap text-sm text-ink-soft">
+              <strong className="text-ink">
+                {districtsVisited}/{totalDistricts}
+              </strong>{' '}
+              <span className="font-bn">জেলা ভ্রমণ</span>
+            </span>
+          </div>
         </>
       ) : null}
     </div>
