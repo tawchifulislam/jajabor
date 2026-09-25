@@ -13,6 +13,8 @@ import ToastProvider from '@/components/ToastProvider';
 import { SessionProvider } from '@/components/SessionProvider';
 import { MotionConfig } from 'framer-motion';
 import { auth } from '@/lib/auth';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import OfflineBanner from '@/components/OfflineBanner';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -94,6 +96,8 @@ export default async function RootLayout({ children }) {
         <ToastProvider>
           <SessionProvider user={user}>
             <MotionConfig reducedMotion="user">
+              <ServiceWorkerRegister />
+              <OfflineBanner />
               <div className="flex min-h-dvh flex-col">
                 <Navbar />
                 <div className="flex flex-1 flex-col">{children}</div>

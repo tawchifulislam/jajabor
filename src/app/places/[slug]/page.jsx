@@ -201,6 +201,7 @@ export default async function PlaceDetailPage({ params }) {
         ) : null}
 
         <PlanningSection
+          title={place.title}
           howToGetThere={place.howToGetThere}
           estimatedCost={place.estimatedCost}
           area={place.area}
