@@ -1,0 +1,51 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Trash2 } from 'lucide-react';
+import ConfirmDialog from './ConfirmDialog';
+import { useToast } from './ToastProvider';
+
+export default function TripActions({ tripId }) {
+  const router = useRouter();
+  const { showToast } = useToast();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  async function handleDelete() {
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/trips/${tripId}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Delete failed');
+      showToast('Trip deleted');
+      router.push('/my-trips');
+      router.refresh();
+    } catch (err) {
+      showToast(err.message || "Couldn't delete this trip", 'error');
+      setDeleting(false);
+    }
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => setConfirmOpen(true)}
+        className="inline-flex items-center gap-1.5 rounded-full border border-danger/30 px-4 py-2 text-sm text-danger-text transition hover:bg-danger-soft"
+      >
+        <Trash2 className="h-4 w-4" />
+        Delete
+      </button>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Delete this trip?"
+        description="This can't be undone - the trip itself will be removed. The places on it stay in the main list."
+        confirmLabel="Delete"
+        danger
+        loading={deleting}
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
+    </>
+  );
+}

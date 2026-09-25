@@ -1,11 +1,9 @@
-import { Navigation2 } from 'lucide-react';
+import { Navigation2 } from "lucide-react";
 
-export default function DirectionsButton({ title, area, district }) {
-  if (!area && !district) return null;
+export default function DirectionsButton({ title, area }) {
+  if (!title) return null;
 
-  const query = [title, area, district, 'Bangladesh']
-    .filter(Boolean)
-    .join(', ');
+  const query = [title, area].filter(Boolean).join(", ");
   const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 
   return (

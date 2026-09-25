@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { LogOut, MapPin, Loader2, User } from 'lucide-react';
+import { LogOut, MapPin, Loader2, User, Map } from 'lucide-react';
 import { signOut } from '@/lib/auth-client';
 import { useAppSession } from './SessionProvider';
 
@@ -77,6 +77,15 @@ export default function ProfileMenu() {
           >
             <MapPin className="h-4 w-4 text-brand" />
             Your places
+          </Link>
+          <Link
+            href="/my-trips"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 rounded-md px-2 py-2 text-sm text-ink transition hover:bg-surface-alt"
+          >
+            <Map className="h-4 w-4 text-brand" />
+            Your trips
           </Link>
 
           <button
