@@ -146,3 +146,10 @@ body {
     animation: none;
   }
 }
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
