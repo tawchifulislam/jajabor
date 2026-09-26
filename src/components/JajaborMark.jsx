@@ -1,11 +1,17 @@
-export default function JajaborMark({ className = 'h-6 w-6' }) {
+export default function JajaborMark({ className = 'h-8 w-8' }) {
   return (
-    <svg viewBox="0 0 70 34" fill="none" className={className}>
-      <path
-        d="M5,5 Q20,22 35,30 Q50,22 65,8 Q58,2 50,10 Q42,16 35,14 Q28,16 20,10 Q12,2 5,5 Z"
+    <svg viewBox="0 0 100 100" className={className}>
+      <text
+        x="50"
+        y="72"
+        textAnchor="middle"
+        fontFamily="var(--font-quote)"
+        fontSize="80"
         fill="var(--color-brand)"
-      />
-      <circle cx="65" cy="8" r="3" fill="var(--color-accent)" />
+      >
+        য
+      </text>
+      <circle cx="78" cy="26" r="7" fill="var(--color-accent)" />
     </svg>
   );
 }
