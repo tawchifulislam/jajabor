@@ -123,22 +123,28 @@ export default function PlaceExplorer({
       <AddInviteNote isLoggedIn={isLoggedIn} />
 
       {places.length > 0 ? (
-        <>
-          <div className="mb-4">
-            <SearchBar value={query} onChange={setQuery} />
-          </div>
-          <DistrictFilter
-            districts={districts}
-            selected={selectedDistrict}
-            onSelect={handleSelectDistrict}
-          />
-          {isLoggedIn ? (
-            <StatusFilter
-              selected={selectedStatus}
-              onSelect={setSelectedStatus}
-            />
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <SearchBar value={query} onChange={setQuery} />
+          {districts.length > 0 ? (
+            <>
+              <div className="hidden h-6 w-px bg-line sm:block" />
+              <DistrictFilter
+                districts={districts}
+                selected={selectedDistrict}
+                onSelect={handleSelectDistrict}
+              />
+            </>
           ) : null}
-        </>
+          {isLoggedIn ? (
+            <>
+              <div className="hidden h-6 w-px bg-line sm:block" />
+              <StatusFilter
+                selected={selectedStatus}
+                onSelect={setSelectedStatus}
+              />
+            </>
+          ) : null}
+        </div>
       ) : null}
 
       {filtered.length === 0 && hasActiveFilter ? (

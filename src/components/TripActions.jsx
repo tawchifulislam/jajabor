@@ -49,7 +49,7 @@ export default function TripActions({ tripId, slug }) {
       <ConfirmDialog
         open={confirmOpen}
         title="Delete this trip?"
-        description="This can't be undone — the trip itself will be removed. The places on it stay in the main list."
+        description="This can't be undone - the trip itself will be removed. The places on it stay in the main list."
         confirmLabel="Delete"
         danger
         loading={deleting}
