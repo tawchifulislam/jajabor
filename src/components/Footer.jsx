@@ -10,9 +10,9 @@ export default function Footer() {
       <Container className="flex flex-col items-center justify-between gap-4 py-6 text-sm text-ink-soft sm:flex-row sm:py-8">
         <Link
           href="/"
-          className="flex items-center gap-1.5 transition hover:text-ink"
+          className="flex items-center gap-0.5 transition hover:text-ink"
         >
-          <JajaborMark className="h-5 w-6" />
+          <JajaborMark className="h-6 w-6" />
           <span className="font-display text-ink">Jajabor</span>
         </Link>
 

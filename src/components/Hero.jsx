@@ -55,14 +55,13 @@ export default function Hero({ quote, attribution }) {
             strokeLinecap="round"
             className="text-brand/40"
           />
-          <g className="text-brand">
-            <path
-              d="M0,1.4 Q4.3,6.3 7.5,8.6 Q10.7,6.3 13.9,2.3 Q12.4,0.6 10.7,2.3 Q9,3.4 7.5,4 Q6,3.4 4.3,2.3 Q2.6,0.6 0,1.4 Z"
-              fill="currentColor"
-            />
-            <animateMotion dur="4.5s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#hero-route-path" />
-            </animateMotion>
+          <g>
+            {!reducedMotion ? (
+              <animateMotion dur="4.5s" repeatCount="indefinite">
+                <mpath href="#hero-route-path" />
+              </animateMotion>
+            ) : null}
+            <circle r="4" fill="var(--color-accent)" />
           </g>
         </svg>
 
