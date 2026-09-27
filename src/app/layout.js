@@ -1,44 +1,68 @@
-import { Suspense } from "react";
-import { Inter, Playfair_Display, Tiro_Bangla, Hind_Siliguri } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import AddFab from "@/components/AddFab";
-import ToastProvider from "@/components/ToastProvider";
-import SessionGate from "@/components/SessionGate";
-import AppShellSkeleton from "@/components/AppShellSkeleton";
-import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
-import OfflineBanner from "@/components/OfflineBanner";
-import { MotionConfig } from "framer-motion";
+import { Suspense } from 'react';
+import {
+  Inter,
+  Playfair_Display,
+  Tiro_Bangla,
+  Hind_Siliguri,
+} from 'next/font/google';
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import AddFab from '@/components/AddFab';
+import ToastProvider from '@/components/ToastProvider';
+import SessionGate from '@/components/SessionGate';
+import AppShellSkeleton from '@/components/AppShellSkeleton';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import OfflineBanner from '@/components/OfflineBanner';
+import { MotionConfig } from 'framer-motion';
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", display: "swap" });
-const tiroBangla = Tiro_Bangla({ subsets: ["bengali"], weight: "400", variable: "--font-tiro-bangla", display: "swap" });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+const tiroBangla = Tiro_Bangla({
+  subsets: ['bengali'],
+  weight: '400',
+  variable: '--font-tiro-bangla',
+  display: 'swap',
+});
 const hindSiliguri = Hind_Siliguri({
-  subsets: ["bengali"],
-  weight: ["400", "500", "600"],
-  variable: "--font-hind-siliguri",
-  display: "swap",
+  subsets: ['bengali'],
+  weight: ['400', '500', '600'],
+  variable: '--font-hind-siliguri',
+  display: 'swap',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jajabor.vercel.app";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://jajabor.vercel.app';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Jajabor",
-  description: "A personal log of places to visit - photos, routes, and travel notes.",
-  manifest: "/manifest.json",
-  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
+  title: 'Jajabor',
+  description:
+    'A personal log of places to visit - photos, routes, and travel notes.',
+  manifest: '/manifest.json',
+  icons: { icon: '/favicon.ico', apple: '/apple-touch-icon.png' },
+  verification: {
+    google: 'XLpyYO33DiPxz57WSmbRNp1cSATk6hBbLztjG2zv-do',
+  },
   openGraph: {
-    title: "Jajabor",
-    description: "A personal log of places to visit - photos, routes, and travel notes.",
+    title: 'Jajabor',
+    description:
+      'A personal log of places to visit - photos, routes, and travel notes.',
     url: siteUrl,
-    siteName: "Jajabor",
-    type: "website",
+    siteName: 'Jajabor',
+    type: 'website',
   },
 };
 
-export const viewport = { themeColor: "#0f766e" };
+export const viewport = { themeColor: '#0f766e' };
 
 const THEME_INIT_SCRIPT = `
   try {
