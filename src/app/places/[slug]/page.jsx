@@ -21,6 +21,7 @@ import { isBengali } from '@/lib/isBengali';
 import { displayLocation } from '@/lib/placeDisplay';
 import { getMyStatuses, getVisitedCounts } from '@/lib/placeStatus';
 import { headers } from 'next/headers';
+import PlaceStatusRow from './../../../components/PlaceStatusRow';
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://jajabor.vercel.app';
@@ -156,10 +157,11 @@ export default async function PlaceDetailPage({ params }) {
                 <MapPin className="h-4 w-4 shrink-0" />
                 {displayLocation(place)}
               </p>
-              <StatusToggle
+              <PlaceStatusRow
                 placeId={place._id}
-                status={myStatus}
+                initialStatus={myStatus}
                 editable={isLoggedIn}
+                initialVisitedCount={visitedCount}
               />
             </div>
           </div>
@@ -178,7 +180,6 @@ export default async function PlaceDetailPage({ params }) {
           category={place.category}
           bestTime={place.bestTime}
           photoCount={place.gallery?.length || 0}
-          visitedCount={visitedCount}
         />
 
         <AddedByCredit

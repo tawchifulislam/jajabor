@@ -6,7 +6,7 @@ export default function JajaborMark({ className = 'h-8 w-8' }) {
         y="72"
         textAnchor="middle"
         fontFamily="var(--font-quote)"
-        fontSize="80"
+        fontSize="70"
         fill="var(--color-brand)"
       >
         য

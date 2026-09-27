@@ -25,6 +25,7 @@ export default function PlaceExplorer({
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [statuses, setStatuses] = useState(myStatuses);
+  const [counts, setCounts] = useState(visitedCounts);
   const [selectedDistrict, setSelectedDistrict] = useState(
     searchParams.get('district') || null,
   );
@@ -32,7 +33,18 @@ export default function PlaceExplorer({
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   function handleStatusChange(placeId, next) {
-    setStatuses(prev => ({ ...prev, [placeId]: next }));
+    const prev = statuses[placeId] || 'want-to-go';
+    setStatuses(p => ({ ...p, [placeId]: next }));
+
+    if (prev !== next) {
+      setCounts(p => {
+        const current = p[placeId] || 0;
+        let delta = 0;
+        if (next === 'visited' && prev !== 'visited') delta = 1;
+        if (prev === 'visited' && next !== 'visited') delta = -1;
+        return { ...p, [placeId]: Math.max(0, current + delta) };
+      });
+    }
   }
 
   const districts = useMemo(

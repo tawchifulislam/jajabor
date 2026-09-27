@@ -12,7 +12,7 @@ export default function SearchBar({ value, onChange }) {
         onChange={e => onChange(e.target.value)}
         placeholder="Search places or districts..."
         aria-label="Search places or districts"
-        className="w-full rounded-full border border-line bg-card py-2.5 pl-10 pr-9 text-sm text-ink outline-none transition focus:border-brand focus-visible:ring-2 focus-visible:ring-brand"
+        className="h-10 w-full rounded-full border border-line bg-card pl-10 pr-9 text-sm text-ink outline-none transition focus:border-brand focus-visible:ring-2 focus-visible:ring-brand"
       />
       {value ? (
         <button
