@@ -29,14 +29,16 @@ export default function QuickFacts({ category, bestTime, photoCount }) {
   if (!items.length) return null;
 
   return (
-    <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 rounded-lg border border-line bg-surface-alt/60 px-4 py-3">
+    <div className="mb-6 flex flex-wrap items-start gap-x-5 gap-y-2 rounded-lg border border-line bg-surface-alt/60 px-4 py-3">
       {items.map((item, i) => (
         <span
           key={i}
-          className="flex items-center gap-1.5 text-sm text-ink-soft"
+          className="flex min-w-0 items-start gap-1.5 text-sm text-ink"
         >
-          <item.icon className="h-4 w-4 text-brand" />
-          <span className={item.bengali ? 'font-bn' : ''}>{item.content}</span>
+          <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+          <span className={item.bengali ? 'font-bn leading-relaxed' : ''}>
+            {item.content}
+          </span>
         </span>
       ))}
     </div>

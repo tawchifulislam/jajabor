@@ -16,7 +16,7 @@ export default function StatusFilter({ selected, onSelect }) {
           className={`flex h-10 shrink-0 items-center rounded-full border px-3 text-xs font-medium transition ${
             selected === opt.value
               ? 'border-action bg-action text-white'
-              : 'border-line text-ink-soft hover:bg-card'
+              : 'border-line-strong bg-card text-ink-soft hover:border-brand/60 hover:text-ink'
           } ${opt.value ? 'font-bn' : ''}`}
         >
           {opt.label}
