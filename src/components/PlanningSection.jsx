@@ -7,16 +7,14 @@ export default function PlanningSection({
   howToGetThere,
   estimatedCost,
   area,
-  district,
 }) {
   if (!howToGetThere && !estimatedCost) return null;
 
   return (
     <section className="mb-6 rounded-card border border-line bg-card p-5">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-display text-lg text-ink">Planning your visit</h2>
-                <DirectionsButton title={title} area={area} />
-      </div>
+      <h2 className="mb-4 font-display text-lg text-ink">
+        Planning your visit
+      </h2>
 
       {howToGetThere ? (
         <div className={estimatedCost ? 'mb-4 border-b border-line pb-4' : ''}>
@@ -26,7 +24,9 @@ export default function PlanningSection({
           </h3>
           <p
             className={`whitespace-pre-line text-ink-soft ${
-              isBengali(howToGetThere) ? 'font-bn' : ''
+              isBengali(howToGetThere)
+                ? 'font-bn leading-[1.7]'
+                : 'leading-relaxed'
             }`}
           >
             {howToGetThere}
@@ -42,13 +42,23 @@ export default function PlanningSection({
           </h3>
           <p
             className={`whitespace-pre-line text-ink-soft ${
-              isBengali(estimatedCost) ? 'font-bn' : ''
+              isBengali(estimatedCost)
+                ? 'font-bn leading-[1.7]'
+                : 'leading-relaxed'
             }`}
           >
             {estimatedCost}
           </p>
         </div>
       ) : null}
+
+      <div className="mt-5 border-t border-line pt-4">
+        <DirectionsButton
+          title={title}
+          area={area}
+          className="w-full justify-center sm:w-auto"
+        />
+      </div>
     </section>
   );
 }
