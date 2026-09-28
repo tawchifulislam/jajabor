@@ -3,7 +3,7 @@
 @theme {
   --color-ink: #0f1720;
   --color-ink-soft: #46535f;
-  --color-ink-faint: #94a0aa;
+  --color-ink-faint: #66727d;
   --color-surface: #fbfaf7;
   --color-surface-alt: #f3f0ea;
   --color-card: #ffffff;
@@ -33,7 +33,7 @@
 [data-theme='dark'] {
   --color-ink: #f1efe8;
   --color-ink-soft: #b7c0c7;
-  --color-ink-faint: #6b7680;
+  --color-ink-faint: #909ba3;
   --color-surface: #10201c;
   --color-surface-alt: #16281f;
   --color-card: #182a24;
@@ -56,7 +56,7 @@
   :root:not([data-theme]) {
     --color-ink: #f1efe8;
     --color-ink-soft: #b7c0c7;
-    --color-ink-faint: #6b7680;
+    --color-ink-faint: #909ba3;
     --color-surface: #10201c;
     --color-surface-alt: #16281f;
     --color-card: #182a24;
@@ -93,6 +93,11 @@ body {
 
 ::selection {
   background: var(--color-brand-soft);
+}
+
+::placeholder {
+  color: var(--color-ink-faint);
+  opacity: 1;
 }
 
 ::-webkit-scrollbar {
