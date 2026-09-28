@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -19,6 +20,7 @@ export default function PlaceCard({
   onStatusChange,
   visitedCount = 0,
 }) {
+  const [imgLoaded, setImgLoaded] = useState(false);
   const location = displayLocation(place);
   const bengaliTitle = isBengali(place.title);
   const bengaliLocation = isBengali(location);
@@ -40,13 +42,16 @@ export default function PlaceCard({
           href={href}
           className="relative block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
         >
-          <div className="relative h-44 w-full overflow-hidden">
+          <div className="relative h-44 w-full overflow-hidden bg-surface-alt">
             <Image
               src={cloudinaryUrl(place.coverImage, 600)}
               alt={place.title}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+              onLoad={() => setImgLoaded(true)}
+              className={`object-cover transition-all duration-500 group-hover:scale-[1.04] ${
+                imgLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
+              }`}
             />
           </div>
           {showNew ? (
@@ -84,8 +89,10 @@ export default function PlaceCard({
 
             {place.howToGetThere ? (
               <p
-                className={`mt-1.5 line-clamp-2 text-sm text-ink-soft ${
-                  isBengali(place.howToGetThere) ? 'font-bn' : ''
+                className={`mt-2 line-clamp-2 text-ink-soft ${
+                  isBengali(place.howToGetThere)
+                    ? 'font-bn text-[15px] leading-[1.7]'
+                    : 'text-sm leading-relaxed'
                 }`}
               >
                 {place.howToGetThere}
