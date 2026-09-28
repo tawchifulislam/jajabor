@@ -1,12 +1,12 @@
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { Map } from 'lucide-react';
+import { Map, Plus } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
+import { isBengali } from '@/lib/isBengali';
 import Container from '@/components/layout/Container';
 import SectionHeader from '@/components/layout/SectionHeader';
-import { isBengali } from '@/lib/isBengali';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,23 +27,36 @@ export default async function MyTripsPage() {
         eyebrow="Your trips"
         title="Planned trips"
         action={
-          <Link
-            href="/trips/new"
-            className="rounded-full bg-action px-4 py-2 text-sm font-medium text-white transition hover:brightness-110"
-          >
-            Plan a trip
-          </Link>
+          trips.length > 0 ? (
+            <Link
+              href="/trips/new"
+              className="rounded-full bg-action px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+            >
+              Plan a trip
+            </Link>
+          ) : null
         }
         className="mb-6"
       />
 
       {trips.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-line px-6 py-16 text-center">
-          <Map className="h-8 w-8 text-ink-soft" strokeWidth={1.5} />
-          <p className="text-ink">No trips yet</p>
-          <p className="text-sm text-ink-soft">
-            Combine a few places into a shareable plan.
-          </p>
+        <div className="flex flex-col items-center justify-center gap-4 rounded-card border border-dashed border-line px-6 py-16 text-center">
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-alt">
+            <Map className="h-6 w-6 text-ink-soft" strokeWidth={1.5} />
+          </span>
+          <div>
+            <p className="font-display text-lg text-ink">No trips yet</p>
+            <p className="mt-1 text-sm text-ink-soft">
+              Combine a few places into a shareable plan.
+            </p>
+          </div>
+          <Link
+            href="/trips/new"
+            className="inline-flex items-center gap-1.5 rounded-full bg-action px-6 py-3 text-sm font-medium text-white transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+          >
+            <Plus className="h-4 w-4" />
+            Plan a trip
+          </Link>
         </div>
       ) : (
         <ul className="space-y-3">
@@ -55,7 +68,11 @@ export default async function MyTripsPage() {
               >
                 <div>
                   <p
-                    className={`text-ink ${isBengali(trip.name) ? 'font-bn font-medium' : 'font-medium'}`}
+                    className={`text-ink ${
+                      isBengali(trip.name)
+                        ? 'font-bn font-medium'
+                        : 'font-medium'
+                    }`}
                   >
                     {trip.name}
                   </p>
