@@ -4,6 +4,12 @@ import { DISTRICTS_BY_DIVISION } from '@/lib/districts';
 
 const CHIP_THRESHOLD = 6;
 
+const chipBase =
+  'flex h-10 shrink-0 items-center rounded-full border px-3 text-xs font-medium transition';
+const chipIdle =
+  'border-line-strong bg-card text-ink-soft hover:border-brand/60 hover:text-ink';
+const chipActive = 'border-action bg-action text-white';
+
 export default function DistrictFilter({ districts, selected, onSelect }) {
   if (!districts.length) return null;
 
@@ -21,7 +27,7 @@ export default function DistrictFilter({ districts, selected, onSelect }) {
         value={selected || ''}
         onChange={e => onSelect(e.target.value || null)}
         aria-label="Filter by district"
-        className="h-10 rounded-full border border-line bg-card px-3 text-xs font-medium text-ink outline-none transition focus:border-brand"
+        className="h-10 rounded-full border border-line-strong bg-card px-3 text-xs font-medium text-ink outline-none transition focus:border-brand"
       >
         <option value="">All districts</option>
         {Object.entries(grouped).map(([division, divDistricts]) => (
@@ -41,11 +47,7 @@ export default function DistrictFilter({ districts, selected, onSelect }) {
     <div className="flex flex-wrap items-center gap-2">
       <button
         onClick={() => onSelect(null)}
-        className={`flex h-10 shrink-0 items-center rounded-full border px-3 text-xs font-medium transition ${
-          !selected
-            ? 'border-action bg-action text-white'
-            : 'border-line text-ink-soft hover:bg-card'
-        }`}
+        className={`${chipBase} ${!selected ? chipActive : chipIdle}`}
       >
         All
       </button>
@@ -53,11 +55,7 @@ export default function DistrictFilter({ districts, selected, onSelect }) {
         <button
           key={d}
           onClick={() => onSelect(d)}
-          className={`flex h-10 shrink-0 items-center rounded-full border px-3 font-bn text-xs font-medium transition ${
-            selected === d
-              ? 'border-action bg-action text-white'
-              : 'border-line text-ink-soft hover:bg-card'
-          }`}
+          className={`${chipBase} font-bn ${selected === d ? chipActive : chipIdle}`}
         >
           {d}
         </button>
