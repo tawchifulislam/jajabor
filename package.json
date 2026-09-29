@@ -1,15 +1,14 @@
 {
-  "name": "jajabor",
+  "name": "waynama",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build --webpack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint ."
   },
   "dependencies": {
-    "@serwist/next": "^9.5.12",
     "better-auth": "^1.7.5",
     "cloudinary": "^2.11.0",
     "framer-motion": "^12.38.0",
@@ -17,8 +16,7 @@
     "mongodb": "^7.6.0",
     "next": "16.3.5",
     "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "serwist": "^9.5.12"
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

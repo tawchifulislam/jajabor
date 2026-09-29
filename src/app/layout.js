@@ -12,8 +12,6 @@ import AddFab from '@/components/AddFab';
 import ToastProvider from '@/components/ToastProvider';
 import SessionGate from '@/components/SessionGate';
 import AppShellSkeleton from '@/components/AppShellSkeleton';
-import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
-import OfflineBanner from '@/components/OfflineBanner';
 import { MotionConfig } from 'framer-motion';
 
 const inter = Inter({
@@ -94,8 +92,6 @@ export default function RootLayout({ children }) {
           <Suspense fallback={<AppShellSkeleton />}>
             <SessionGate>
               <MotionConfig reducedMotion="user">
-                <ServiceWorkerRegister />
-                <OfflineBanner />
                 <div className="flex min-h-dvh flex-col">
                   <Navbar />
                   <div className="flex flex-1 flex-col">{children}</div>
