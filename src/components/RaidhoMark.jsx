@@ -1,4 +1,4 @@
-export default function JajaborMark({ className = 'h-8 w-8' }) {
+export default function RaidhoMark({ className = 'h-8 w-8' }) {
   return (
     <svg viewBox="0 0 100 100" className={className}>
       <text
@@ -9,7 +9,7 @@ export default function JajaborMark({ className = 'h-8 w-8' }) {
         fontSize="70"
         fill="var(--color-brand)"
       >
-        য
+        ᚱ
       </text>
       <circle cx="78" cy="26" r="7" fill="var(--color-accent)" />
     </svg>

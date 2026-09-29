@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Code2 } from 'lucide-react';
-import JajaborMark from './JajaborMark';
 import MusicPlayer from './MusicPlayer';
 import Container from './layout/Container';
+import RaidhoMark from './RaidhoMark';
 
 export default function Footer() {
   return (
@@ -12,8 +12,8 @@ export default function Footer() {
           href="/"
           className="flex items-center gap-0.5 transition hover:text-ink"
         >
-          <JajaborMark className="h-6 w-6" />
-          <span className="font-display text-ink">Jajabor</span>
+          <RaidhoMark className="h-6 w-6" />
+          <span className="font-display text-ink">WayNama</span>
         </Link>
 
         <MusicPlayer />

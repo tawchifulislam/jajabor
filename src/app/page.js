@@ -6,7 +6,7 @@ import PlaceGridSkeleton from '@/components/PlaceGridSkeleton';
 
 export const dynamic = 'force-dynamic';
 
-const title = 'Jajabor (যাযাবর) - Places to visit in Bangladesh';
+const title = 'WayNama (পথের-গল্প) - Places to visit in Bangladesh';
 const description =
   'বাংলাদেশের ঘুরে দেখার জায়গা - ছবি, যাওয়ার পথ আর ভ্রমণ-নোট এক জায়গায়। A shared log of places to visit across Bangladesh.';
 
@@ -18,7 +18,7 @@ export const metadata = {
     title,
     description,
     url: '/',
-    siteName: 'Jajabor',
+    siteName: 'WayNama',
     type: 'website',
   },
 };

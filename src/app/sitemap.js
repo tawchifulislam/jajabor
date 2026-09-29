@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function sitemap() {
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || 'https://jajabor.vercel.app';
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://waynama.vercel.app';
   const db = await getDb();
   const places = await db
     .collection('places')

@@ -6,8 +6,8 @@ import { signIn } from '@/lib/auth-client';
 import { useAppSession } from './SessionProvider';
 import ProfileMenu from './ProfileMenu';
 import ThemeToggle from './ThemeToggle';
-import JajaborMark from './JajaborMark';
 import Container from './layout/Container';
+import RaidhoMark from './RaidhoMark';
 
 export default function Navbar() {
   const user = useAppSession();
@@ -16,9 +16,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur">
       <Container className="flex items-center justify-between py-3 sm:py-4">
         <Link href="/" className="flex shrink-0 items-center gap-0.5">
-          <JajaborMark className="h-8 w-8 sm:h-9 sm:w-9" />
+          <RaidhoMark className="h-8 w-8 sm:h-9 sm:w-9" />
           <span className="font-display text-lg tracking-tight text-ink sm:text-xl">
-            Jajabor
+            WayNama
           </span>
         </Link>
 

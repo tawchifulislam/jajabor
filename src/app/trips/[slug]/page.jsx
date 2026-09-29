@@ -38,10 +38,10 @@ async function getTrip(slug) {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const trip = await getTrip(slug);
-  if (!trip) return { title: 'Trip not found - Jajabor' };
+  if (!trip) return { title: 'Trip not found - WayNama' };
 
   return {
-    title: `${trip.name} - Jajabor`,
+    title: `${trip.name} - WayNama`,
     description: `A ${trip.places.length}-stop trip: ${trip.places.map(p => p.title).join(', ')}`,
   };
 }

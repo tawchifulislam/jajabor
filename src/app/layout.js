@@ -38,11 +38,11 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://jajabor.vercel.app';
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://WayNama.vercel.app';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Jajabor',
+  title: 'WayNama',
   description:
     'A personal log of places to visit - photos, routes, and travel notes.',
   manifest: '/manifest.json',
@@ -51,11 +51,11 @@ export const metadata = {
     google: 'XLpyYO33DiPxz57WSmbRNp1cSATk6hBbLztjG2zv-do',
   },
   openGraph: {
-    title: 'Jajabor',
+    title: 'WayNama',
     description:
       'A personal log of places to visit - photos, routes, and travel notes.',
     url: siteUrl,
-    siteName: 'Jajabor',
+    siteName: 'WayNama',
     type: 'website',
   },
 };
@@ -64,7 +64,7 @@ export const viewport = { themeColor: '#0f766e' };
 
 const THEME_INIT_SCRIPT = `
   try {
-    var t = localStorage.getItem('jajabor-theme');
+    var t = localStorage.getItem('WayNama-theme');
     if (t === 'dark' || t === 'light') {
       document.documentElement.setAttribute('data-theme', t);
     }

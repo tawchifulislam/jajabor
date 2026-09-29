@@ -24,7 +24,7 @@ import { headers } from 'next/headers';
 import PlaceStatusRow from './../../../components/PlaceStatusRow';
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://jajabor.vercel.app';
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://WayNama.vercel.app';
 
 function PlaceJsonLd({ place }) {
   const data = {
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }) {
   const place = await getPlace(slug);
 
   if (!place) {
-    return { title: 'Place not found - Jajabor' };
+    return { title: 'Place not found - WayNama' };
   }
 
   const description =
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }) {
     `A place to visit in ${displayLocation(place)}.`;
 
   return {
-    title: `${place.title} - Jajabor`,
+    title: `${place.title} - WayNama`,
     description,
     openGraph: {
       title: place.title,

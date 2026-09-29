@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
-const STORAGE_KEY = 'jajabor-theme';
+const STORAGE_KEY = 'WayNama-theme';
 
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
