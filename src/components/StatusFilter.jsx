@@ -13,10 +13,10 @@ export default function StatusFilter({ selected, onSelect }) {
         <button
           key={opt.label}
           onClick={() => onSelect(opt.value)}
-          className={`flex h-10 shrink-0 items-center rounded-full border px-3 text-xs font-medium transition ${
+          className={`flex h-10 shrink-0 items-center rounded-full px-3 text-xs font-medium transition active:scale-95 ${
             selected === opt.value
-              ? 'border-action bg-action text-white'
-              : 'border-line-strong bg-card text-ink-soft hover:border-brand/60 hover:text-ink'
+              ? 'bg-action text-white'
+              : 'bg-surface-alt text-ink-soft hover:bg-line'
           } ${opt.value ? 'font-bn' : ''}`}
         >
           {opt.label}

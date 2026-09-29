@@ -162,7 +162,7 @@ export default function PlaceExplorer({
       {filtered.length === 0 && hasActiveFilter ? (
         <div className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-line px-6 py-16 text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-alt">
-            <SearchX className="h-6 w-6 text-ink-soft" strokeWidth={1.5} />
+            <SearchX className="h-6 w-6 text-ink-faint" strokeWidth={1.5} />
           </span>
           <div>
             <p className="font-display text-lg text-ink">

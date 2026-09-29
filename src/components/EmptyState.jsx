@@ -9,8 +9,8 @@ export default function EmptyState() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-4 rounded-card border border-dashed border-line bg-card/40 px-6 py-20 text-center sm:py-28">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-soft">
-        <MapPinned className="h-8 w-8 text-brand" strokeWidth={1.6} />
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface-alt">
+        <MapPinned className="h-8 w-8 text-ink-faint" strokeWidth={1.6} />
       </div>
 
       <div>
