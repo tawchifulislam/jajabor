@@ -5,10 +5,9 @@ import { DISTRICTS_BY_DIVISION } from '@/lib/districts';
 const CHIP_THRESHOLD = 6;
 
 const chipBase =
-  'flex h-10 shrink-0 items-center rounded-full border px-3 text-xs font-medium transition';
-const chipIdle =
-  'border-line-strong bg-card text-ink-soft hover:border-brand/60 hover:text-ink';
-const chipActive = 'border-action bg-action text-white';
+  'flex h-10 shrink-0 items-center rounded-full px-3 text-xs font-medium transition active:scale-95';
+const chipIdle = 'bg-surface-alt text-ink-soft hover:bg-line';
+const chipActive = 'bg-action text-white';
 
 export default function DistrictFilter({ districts, selected, onSelect }) {
   if (!districts.length) return null;
@@ -27,7 +26,7 @@ export default function DistrictFilter({ districts, selected, onSelect }) {
         value={selected || ''}
         onChange={e => onSelect(e.target.value || null)}
         aria-label="Filter by district"
-        className="h-10 rounded-full border border-line-strong bg-card px-3 text-xs font-medium text-ink outline-none transition focus:border-brand"
+        className="h-10 rounded-full border-0 bg-surface-alt px-3 text-xs font-medium text-ink outline-none transition focus:ring-2 focus:ring-brand/40"
       >
         <option value="">All districts</option>
         {Object.entries(grouped).map(([division, divDistricts]) => (
