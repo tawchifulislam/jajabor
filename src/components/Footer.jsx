@@ -12,7 +12,7 @@ export default function Footer() {
           href="/"
           className="flex items-center gap-0.5 transition hover:text-ink"
         >
-          <RaidhoMark className="h-6 w-6" />
+          <RaidhoMark className="h-4 w-4" />
           <span className="font-display text-ink">WayNama</span>
         </Link>
 

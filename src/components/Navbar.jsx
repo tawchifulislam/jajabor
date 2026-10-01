@@ -16,7 +16,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-line bg-surface/80 backdrop-blur">
       <Container className="flex items-center justify-between py-3 sm:py-4">
         <Link href="/" className="flex shrink-0 items-center gap-0.5">
-          <RaidhoMark className="h-8 w-8 sm:h-9 sm:w-9" />
+          <RaidhoMark className="h-5 w-5 sm:h-6 sm:w-6" />
           <span className="font-display text-lg tracking-tight text-ink sm:text-xl">
             WayNama
           </span>
