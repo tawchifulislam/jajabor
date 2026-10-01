@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Images, MapPin } from 'lucide-react';
 import { cloudinaryUrl } from '@/lib/cloudinaryUrl';
 import { isBengali } from '@/lib/isBengali';
@@ -27,14 +26,9 @@ export default function PlaceCard({
   const isFirst = index === 0;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.4,
-        ease: 'easeOut',
-        delay: Math.min(index, 6) * 0.04,
-      }}
+    <div
+      className="animate-fade-in-up"
+      style={{ animationDelay: `${Math.min(index, 6) * 0.04}s` }}
     >
       <div className="group overflow-hidden rounded-card border border-line bg-card transition-all duration-200 hover:border-line-strong hover:shadow-[0_10px_28px_-10px_rgba(15,23,32,0.18)]">
         <Link
@@ -114,6 +108,6 @@ export default function PlaceCard({
           ) : null}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

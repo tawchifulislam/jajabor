@@ -12,7 +12,6 @@ import AddFab from '@/components/AddFab';
 import ToastProvider from '@/components/ToastProvider';
 import SessionGate from '@/components/SessionGate';
 import AppShellSkeleton from '@/components/AppShellSkeleton';
-import { MotionConfig } from 'framer-motion';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,7 +37,7 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://WayNama.vercel.app';
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://waynama.vercel.app';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -64,7 +63,7 @@ export const viewport = { themeColor: '#0f766e' };
 
 const THEME_INIT_SCRIPT = `
   try {
-    var t = localStorage.getItem('WayNama-theme');
+    var t = localStorage.getItem('jajabor-theme');
     if (t === 'dark' || t === 'light') {
       document.documentElement.setAttribute('data-theme', t);
     }
@@ -91,14 +90,12 @@ export default function RootLayout({ children }) {
         <ToastProvider>
           <Suspense fallback={<AppShellSkeleton />}>
             <SessionGate>
-              <MotionConfig reducedMotion="user">
-                <div className="flex min-h-dvh flex-col">
-                  <Navbar />
-                  <div className="flex flex-1 flex-col">{children}</div>
-                  <Footer />
-                </div>
-                <AddFab />
-              </MotionConfig>
+              <div className="flex min-h-dvh flex-col">
+                <Navbar />
+                <div className="flex flex-1 flex-col">{children}</div>
+                <Footer />
+              </div>
+              <AddFab />
             </SessionGate>
           </Suspense>
         </ToastProvider>

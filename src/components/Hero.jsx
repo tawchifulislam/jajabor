@@ -1,7 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useAnimationFrame } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import Container from './layout/Container';
 import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion';
 
@@ -11,16 +10,24 @@ function AnimatedRouteDot({ pathRef }) {
   const dotRef = useRef(null);
   const reducedMotion = usePrefersReducedMotion();
 
-  useAnimationFrame(t => {
-    const path = pathRef.current;
-    const dot = dotRef.current;
-    if (!path || !dot) return;
-    const length = path.getTotalLength();
-    const progress = reducedMotion ? 0 : (t % DOT_DURATION) / DOT_DURATION;
-    const point = path.getPointAtLength(progress * length);
-    dot.setAttribute('cx', point.x);
-    dot.setAttribute('cy', point.y);
-  });
+  useEffect(() => {
+    if (reducedMotion) return;
+    let frameId;
+    function tick(t) {
+      const path = pathRef.current;
+      const dot = dotRef.current;
+      if (path && dot) {
+        const length = path.getTotalLength();
+        const progress = (t % DOT_DURATION) / DOT_DURATION;
+        const point = path.getPointAtLength(progress * length);
+        dot.setAttribute('cx', point.x);
+        dot.setAttribute('cy', point.y);
+      }
+      frameId = requestAnimationFrame(tick);
+    }
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [reducedMotion, pathRef]);
 
   return <circle ref={dotRef} r="4" fill="var(--color-accent)" />;
 }
@@ -34,20 +41,13 @@ export default function Hero({ quote, attribution }) {
       <div className="route-dots absolute inset-0" />
 
       <Container size="narrow" className="relative py-16 text-center sm:py-20">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="quote-mark select-none text-5xl text-brand/25 sm:text-6xl"
-        >
+        <p className="quote-mark animate-fade-in-up select-none text-5xl text-brand/25 sm:text-6xl">
           “
-        </motion.p>
+        </p>
 
-        <motion.blockquote
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="-mt-3 font-quote text-xl leading-snug text-ink sm:-mt-4 sm:text-2xl sm:leading-relaxed md:text-3xl lg:text-4xl"
+        <blockquote
+          className="animate-fade-in-up -mt-3 font-quote text-xl leading-snug text-ink sm:-mt-4 sm:text-2xl sm:leading-relaxed md:text-3xl lg:text-4xl"
+          style={{ animationDelay: '0.1s' }}
         >
           {lines.map((line, idx) => (
             <span key={idx} className="block">
@@ -61,7 +61,7 @@ export default function Hero({ quote, attribution }) {
               )}
             </span>
           ))}
-        </motion.blockquote>
+        </blockquote>
 
         <svg
           viewBox="0 0 200 24"
@@ -80,14 +80,12 @@ export default function Hero({ quote, attribution }) {
         </svg>
 
         {attribution ? (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-5 text-sm tracking-wide text-ink-soft"
+          <p
+            className="animate-fade-in mt-5 text-sm tracking-wide text-ink-soft"
+            style={{ animationDelay: '0.4s' }}
           >
             - {attribution}
-          </motion.p>
+          </p>
         ) : null}
       </Container>
     </section>
