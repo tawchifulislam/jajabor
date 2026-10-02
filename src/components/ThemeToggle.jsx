@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
-const STORAGE_KEY = 'WayNama-theme';
+const STORAGE_KEY = 'jajabor-theme';
 
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
@@ -20,9 +20,18 @@ export default function ThemeToggle() {
 
   function toggle() {
     const next = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem(STORAGE_KEY, next);
-    setIsDark(next === 'dark');
+
+    function apply() {
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEY, next);
+      setIsDark(next === 'dark');
+    }
+
+    if (document.startViewTransition) {
+      document.startViewTransition(apply);
+    } else {
+      apply();
+    }
   }
 
   return (
