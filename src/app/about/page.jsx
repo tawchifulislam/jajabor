@@ -1,4 +1,11 @@
-import { ShieldCheck, MapPin, Github, Globe, CodeXml } from 'lucide-react';
+import {
+  ShieldCheck,
+  MapPin,
+  Github,
+  Globe,
+  CodeXml,
+  Mail,
+} from 'lucide-react';
 import Container from '@/components/layout/Container';
 
 export const metadata = {
@@ -13,7 +20,7 @@ export default function AboutPage() {
         About WayNama
       </h1>
       <p className="mb-8 text-ink-soft">
-        WayNama (পথনামা) started as one person&apos;s private list of places
+        WayNama (পথের-গল্প) started as one person&apos;s private list of places
         worth visiting in Bangladesh - photos, routes, and notes kept in one
         place. It&apos;s now open for anyone to add to.
       </p>
@@ -69,6 +76,23 @@ export default function AboutPage() {
             Portfolio
           </a>
         </div>
+      </section>
+      <section className="mt-6 rounded-card border border-line bg-surface-alt/60 p-5">
+        <h2 className="mb-2 flex items-center gap-2 font-display text-lg text-ink">
+          <Mail className="h-4 w-4 text-brand" />
+          Found something wrong?
+        </h2>
+        <p className="text-ink-soft">
+          If a route, photo, or detail seems outdated or incorrect, let us know
+          at{' '}
+          <a
+            href="mailto:tawchif04@gmail.com"
+            className="text-brand hover:underline"
+          >
+            tawchif04@gmail.com
+          </a>
+          .
+        </p>
       </section>
     </Container>
   );
