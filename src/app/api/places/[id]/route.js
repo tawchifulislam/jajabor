@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { isAdmin } from '@/lib/isAdmin';
 import { canEditPlace } from '@/lib/canEditPlace';
+import { isCloudinaryUrl } from '@/lib/isCloudinaryUrl';
 
 export async function PATCH(req, { params }) {
   const session = await auth.api.getSession({ headers: req.headers });
@@ -30,6 +31,23 @@ export async function PATCH(req, { params }) {
     }
 
     const body = await req.json();
+
+    if (body.coverImage && !isCloudinaryUrl(body.coverImage)) {
+      return NextResponse.json(
+        { error: 'Invalid cover image' },
+        { status: 400 },
+      );
+    }
+    if (
+      Array.isArray(body.gallery) &&
+      body.gallery.some(url => !isCloudinaryUrl(url))
+    ) {
+      return NextResponse.json(
+        { error: 'Invalid gallery image' },
+        { status: 400 },
+      );
+    }
+
     const allowed = [
       'title',
       'district',
