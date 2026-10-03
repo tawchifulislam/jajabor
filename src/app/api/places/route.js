@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
+import { isCloudinaryUrl } from '@/lib/isCloudinaryUrl';
 
 export async function GET() {
   try {
@@ -43,9 +44,24 @@ export async function POST(req) {
       notes,
     } = body;
 
-    if (!title?.trim() || !district?.trim() || !area?.trim() || !coverImage) {
+    if (
+      !title?.trim() ||
+      !district?.trim() ||
+      !area?.trim() ||
+      !coverImage ||
+      !isCloudinaryUrl(coverImage)
+    ) {
       return NextResponse.json(
-        { error: 'title, district, area, and coverImage are required' },
+        {
+          error: 'title, district, area, and a valid cover image are required',
+        },
+        { status: 400 },
+      );
+    }
+
+    if (Array.isArray(gallery) && gallery.some(url => !isCloudinaryUrl(url))) {
+      return NextResponse.json(
+        { error: 'Invalid gallery image' },
         { status: 400 },
       );
     }
